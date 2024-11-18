@@ -49,7 +49,7 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="cbxIdUsuarioEmpleado" pref="114" max="32767" attributes="0"/>
+                                              <Component id="cbxIdUsuarioEmpleado" max="32767" attributes="0"/>
                                               <Component id="cbxIdTiendaEmpleado" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txtApellidoEmpleado" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txtNombreEmpleado" alignment="0" max="32767" attributes="0"/>
@@ -102,7 +102,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="55" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -126,7 +126,7 @@
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbxIdUsuarioEmpleado" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="152" max="32767" attributes="0"/>
+              <EmptySpace pref="159" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -202,7 +202,9 @@
     <Component class="javax.swing.JComboBox" name="cbxIdTiendaEmpleado">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="--Seleccionar--"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -212,7 +214,9 @@
     <Component class="javax.swing.JComboBox" name="cbxIdUsuarioEmpleado">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="--Seleccionar--"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>

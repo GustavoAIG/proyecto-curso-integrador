@@ -14,6 +14,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private static final String PASSWORD_EMPTY_MESSAGE = "La contraseña no puede estar vacía.";
     private static final int MIN_USERNAME_LENGTH = 4;
     private static final int MIN_PASSWORD_LENGTH = 6;
+    private static final int MAX_LENGTH = 10;
 
     public InicioSesion() {
         initComponents();
@@ -204,29 +205,39 @@ public class InicioSesion extends javax.swing.JFrame {
     
     private boolean validateInputs() {
         String username = txtusuario.getText().trim();
-        String password = String.valueOf(txtcontra.getPassword()).trim();
+    String password = String.valueOf(txtcontra.getPassword()).trim();
 
-        if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, USERNAME_EMPTY_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
-            txtusuario.requestFocus();
-            return false;
-        }
-        if (username.length() < MIN_USERNAME_LENGTH) {
-            JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos " + MIN_USERNAME_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-            txtusuario.requestFocus();
-            return false;
-        }
-        if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, PASSWORD_EMPTY_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
-            txtcontra.requestFocus();
-            return false;
-        }
-        if (password.length() < MIN_PASSWORD_LENGTH) {
-            JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos " + MIN_PASSWORD_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-            txtcontra.requestFocus();
-            return false;
-        }
-        return true;
+    if (username.isEmpty()) {
+        JOptionPane.showMessageDialog(this, USERNAME_EMPTY_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
+        txtusuario.requestFocus();
+        return false;
+    }
+    if (username.length() < MIN_USERNAME_LENGTH) {
+        JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos " + MIN_USERNAME_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+        txtusuario.requestFocus();
+        return false;
+    }
+    if (username.length() > MAX_LENGTH) {
+        JOptionPane.showMessageDialog(this, "El nombre de usuario no puede tener más de " + MAX_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+        txtusuario.requestFocus();
+        return false;
+    }
+    if (password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, PASSWORD_EMPTY_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
+        txtcontra.requestFocus();
+        return false;
+    }
+    if (password.length() < MIN_PASSWORD_LENGTH) {
+        JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos " + MIN_PASSWORD_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+        txtcontra.requestFocus();
+        return false;
+    }
+    if (password.length() > MAX_LENGTH) {
+        JOptionPane.showMessageDialog(this, "La contraseña no puede tener más de " + MAX_LENGTH + " caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+        txtcontra.requestFocus();
+        return false;
+    }
+    return true;
     }
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked

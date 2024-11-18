@@ -1,8 +1,6 @@
 package modelo;
 import java.sql.Connection;
 import controlador.ConexionBD;
-import controlador.ConexionBD;
-import controlador.ConexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -44,4 +42,46 @@ public class EmpleadoDAO {
     }
     return lista;
 }
+  
+    public EmpleadoDTO registrarEmpleado(String nombreEmpleado, String apellidoEmpleado, int idTiendaEmpleado, int idUsuarioEmpleado) {
+        EmpleadoDTO nuevoEmpleado = null;
+        try {
+            String sql = "INSERT INTO empleados (nom_emp, ape_emp, id_tien, id_usu) VALUES (?, ?, ?, ?)";
+            con = conexion.ConectarBaseDatos();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nombreEmpleado);
+            ps.setString(2, apellidoEmpleado);
+            ps.setInt(3, idTiendaEmpleado);
+            ps.setInt(4, idUsuarioEmpleado);
+
+            int filasInsertadas = ps.executeUpdate();
+            if (filasInsertadas > 0) {
+                // Si la inserción es exitosa, se crea un nuevo objeto EmpleadoDTO con los datos
+                nuevoEmpleado = new EmpleadoDTO();
+                nuevoEmpleado.setNombre(nombreEmpleado);
+                nuevoEmpleado.setApellido(apellidoEmpleado);
+                nuevoEmpleado.setIdtienda(idTiendaEmpleado);
+                nuevoEmpleado.setIdusu(idUsuarioEmpleado);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al registrar el empleado: " + e.getMessage());
+        } finally {
+            cerrarRecursos();
+        }
+        return nuevoEmpleado; // Retorna el objeto con los datos del nuevo empleado o null en caso de error
+    }
+
+    private void cerrarRecursos() {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar los recursos: " + e.getMessage());
+        }
+    }
+    
 }

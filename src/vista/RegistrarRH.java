@@ -7,41 +7,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.TiendaDAO;
+import modelo.UsuarioDAO;
+import modelo.UsuarioDTO;
 
 public class RegistrarRH extends javax.swing.JFrame {
-    private void cargarIdsTiendas() {
-        ConexionBD conexionBD = new ConexionBD();
-        try (Connection conn = conexionBD.ConectarBaseDatos()) {
-            String sql = "SELECT nom_tien FROM tiendas";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
 
-            cbxIdTienda.removeAllItems(); // Limpiar el JComboBox antes de cargar los datos
-            while (rs.next()) {
-                cbxIdTienda.addItem(rs.getString("nom_tien")); // Añadir cada ID al JComboBox
-            }
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los IDs de tiendas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    
+    private void cargarIdsTiendas() {
+        TiendaDAO tiendaDAO = new TiendaDAO();
+    List<String> idsTiendas = tiendaDAO.cargarNombresTiendas();
+    
+    for (String id : idsTiendas) {
+        cbxIdTienda.addItem(id); // Añadir cada nombre de tienda al JComboBox
+    }
     }
     
     private void cargarIdsAdministradores() {
-    ConexionBD conexionBD = new ConexionBD();
-    try (Connection conn = conexionBD.ConectarBaseDatos()) {
-        String sql = "SELECT nom_usu FROM usuarios WHERE rol_usu = 'admin'";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    List<String> idsUsuarios = usuarioDAO.cargarNombresAdmins();
 
-        cbxIdAdministrador.removeAllItems(); // Limpiar el JComboBox antes de cargar los datos
-        while (rs.next()) {
-            cbxIdAdministrador.addItem(rs.getString("nom_usu")); // Añadir cada ID al JComboBox
-        }
-        
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar los IDs de usuarios: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    for (String id : idsUsuarios) {
+        cbxIdAdministrador.addItem(id); 
     }
+        
 }
     
     public RegistrarRH() {
@@ -108,6 +99,10 @@ public class RegistrarRH extends javax.swing.JFrame {
             }
         });
 
+        cbxIdTienda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--" }));
+
+        cbxIdAdministrador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--" }));
+
         jLabel9.setText("Elige el la sede de la Tienda");
 
         jLabel10.setText("Elige al usuario");
@@ -142,7 +137,7 @@ public class RegistrarRH extends javax.swing.JFrame {
                                 .addComponent(jLabel10))
                             .addGap(127, 127, 127)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbxIdAdministrador, 0, 106, Short.MAX_VALUE)
+                                .addComponent(cbxIdAdministrador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtUsuarioAdmin)
                                 .addComponent(txtContraAdmin)
                                 .addComponent(txtApellidoAdministrador)
@@ -150,7 +145,7 @@ public class RegistrarRH extends javax.swing.JFrame {
                                 .addComponent(cbxIdTienda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(60, 60, 60)
                             .addComponent(registrarUsuarioAdmin))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,54 +197,37 @@ public class RegistrarRH extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registrarUsuarioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarUsuarioAdminActionPerformed
-    String usuario_admin = txtUsuarioAdmin.getText();
-    String contrasena_admin = new String (txtContraAdmin.getText());
+    String usuario_admin = txtUsuarioAdmin.getText().trim();
+    String contrasena_admin = new String (txtContraAdmin.getText()).trim();
     
      // Validar que los campos no estén vacíos
     if (usuario_admin.isEmpty() || contrasena_admin.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    
-    // Definir la conexión y la consulta SQL
-    Connection conn = null;
-    Statement stmt = null;
-    
-     try {
-             // Crear una instancia de ConexionBD y obtener la conexión
-            ConexionBD conexion = new ConexionBD();
-            conn = conexion.ConectarBaseDatos();  // Usar el método que ya tienes
 
-            // Consulta SQL para insertar un nuevo usuario utilizando Statement (sin PreparedStatement)
-            String sql = "INSERT INTO usuarios (nom_usu, cont_usu, rol_usu) VALUES ('" + usuario_admin + "', '" + contrasena_admin + "', 'admin')";
+    // Validar que los campos no estén vacíos
+    if (usuario_admin.isEmpty() || contrasena_admin.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            // Crear el Statement para ejecutar la consulta
-            stmt = conn.createStatement();
+    // Crear instancia del DAO
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-            // Ejecutar la consulta
-            int filasAfectadas = stmt.executeUpdate(sql);
+    // Llamar al método para registrar al empleado
+    UsuarioDTO nuevoEmpleado = usuarioDAO.registrarEmpleado(usuario_admin, contrasena_admin, "emple");
 
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Cerrar los recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error al cerrar la conexión: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+    // Verificar si el registro fue exitoso
+    if (nuevoEmpleado != null) {
+        JOptionPane.showMessageDialog(this, "Administrador registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        // Opcional: Limpiar los campos después de un registro exitoso
+        txtUsuarioAdmin.setText("");
+        txtContraAdmin.setText("");
+        
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al registrar el administrador. Intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_registrarUsuarioAdminActionPerformed
 
     private void registrarDatosAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarDatosAdminActionPerformed
