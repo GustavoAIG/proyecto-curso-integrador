@@ -1,14 +1,11 @@
 package vista;
 
-import modelo.ProductoDTO;
-import modelo.ProductoDAO;
 import controlador.*;
 import modelo.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import vista.InicioEmp;
 public class BuscarEmp extends javax.swing.JFrame {
   DefaultTableModel tabla = new DefaultTableModel();
 

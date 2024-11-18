@@ -56,7 +56,6 @@ public class EmpleadoDAO {
 
             int filasInsertadas = ps.executeUpdate();
             if (filasInsertadas > 0) {
-                // Si la inserción es exitosa, se crea un nuevo objeto EmpleadoDTO con los datos
                 nuevoEmpleado = new EmpleadoDTO();
                 nuevoEmpleado.setNombre(nombreEmpleado);
                 nuevoEmpleado.setApellido(apellidoEmpleado);
@@ -68,7 +67,7 @@ public class EmpleadoDAO {
         } finally {
             cerrarRecursos();
         }
-        return nuevoEmpleado; // Retorna el objeto con los datos del nuevo empleado o null en caso de error
+        return nuevoEmpleado; 
     }
 
     private void cerrarRecursos() {
@@ -84,4 +83,29 @@ public class EmpleadoDAO {
         }
     }
     
+  public boolean ActualizarPro(ProductoDTO pro) {
+    String sql = "UPDATE productos SET nom_pro = ?, cat_pro = ?, pre_pro = ?, cant_pro= ?, id_tien = ? WHERE id_pro = ? AND est_pro = 'con stock';";
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, pro.getNombre());
+        ps.setString(2, pro.getCategoria());
+        ps.setDouble(3, pro.getPrecio());
+        ps.setInt(4, pro.getCantidad());
+        ps.setInt(5, pro.getIdtienda());
+        ps.setInt(6, pro.getId());
+        int filas = ps.executeUpdate();
+        return filas > 0;
+    } catch (Exception e) {
+        System.out.println("Error al actualizar: " + e);
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return false;
+}  
 }
