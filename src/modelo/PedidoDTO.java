@@ -10,12 +10,12 @@ private int idtienda;
 private int idadm;
 private int idpro;
 private String nombreadm;
+private String estado;
 
     public PedidoDTO() {
     }
 
-    //Insertar
-    public PedidoDTO(int cantidad, String fecha, int idprove, int idtienda, int idadm, int idpro, String nombreadm) {
+    public PedidoDTO(int cantidad, String fecha, int idprove, int idtienda, int idadm, int idpro, String nombreadm, String estado) {
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.idprove = idprove;
@@ -23,12 +23,10 @@ private String nombreadm;
         this.idadm = idadm;
         this.idpro = idpro;
         this.nombreadm = nombreadm;
+        this.estado = estado;
     }
 
-    
-    //actualizar
-
-    public PedidoDTO(int id, int cantidad, String fecha, int idprove, int idtienda, int idadm, int idpro, String nombreadm) {
+    public PedidoDTO(int id, int cantidad, String fecha, int idprove, int idtienda, int idadm, int idpro, String nombreadm, String estado) {
         this.id = id;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -37,8 +35,9 @@ private String nombreadm;
         this.idadm = idadm;
         this.idpro = idpro;
         this.nombreadm = nombreadm;
+        this.estado = estado;
     }
-    
+
 
 
     public int getId() {
@@ -103,6 +102,14 @@ private String nombreadm;
 
     public void setNombreadm(String nombreadm) {
         this.nombreadm = nombreadm;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     

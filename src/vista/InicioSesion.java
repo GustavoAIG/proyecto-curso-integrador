@@ -15,7 +15,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private static final int MIN_USERNAME_LENGTH = 4;
     private static final int MIN_PASSWORD_LENGTH = 6;
     private static final int MAX_LENGTH = 10;
-
+    public static int idusu = -1;
     public InicioSesion() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -252,6 +252,7 @@ public class InicioSesion extends javax.swing.JFrame {
             txtcontra.setText(null);
             txtusuario.requestFocus();
         } else {
+            InicioSesion.idusu = u.getId();
             switch (u.getRol()) {
                 case "emple":
                     new InicioEmp().setVisible(true);

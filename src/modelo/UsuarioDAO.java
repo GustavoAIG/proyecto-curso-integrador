@@ -16,22 +16,36 @@ public class UsuarioDAO {
     UsuarioDTO u;
 
     public UsuarioDTO iniciarSesion(String usu, String pas) {
-         try {
-            String sql = "select * from usuarios where nom_usu = '" + usu + "' and cont_usu = '" + pas + "'";
+        UsuarioDTO u = null;
+        try {
+            String sql = "SELECT * FROM usuarios WHERE nom_usu = ? AND cont_usu = ?";
             con = conexion.ConectarBaseDatos();
             ps = con.prepareStatement(sql);
+            ps.setString(1, usu);
+            ps.setString(2, pas);
             rs = ps.executeQuery();
-            while(rs.next()){
+
+            if (rs.next()) {
                 u = new UsuarioDTO();
+                u.setId(rs.getInt(1)); 
                 u.setUsuario(rs.getString(2));
                 u.setContra(rs.getString(3));
                 u.setRol(rs.getString(4));
             }
         } catch (Exception e) {
-            System.out.println("Error listar:"+e);
+            System.out.println("Error al iniciar sesión: " + e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception ex) {
+                System.out.println("Error cerrando la conexión: " + ex);
+            }
         }
         return u;
     }
+
     
     public UsuarioDTO registrarEmpleado(String usu, String pas, String rol) {
         UsuarioDTO u = null;

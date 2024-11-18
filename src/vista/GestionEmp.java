@@ -1,16 +1,27 @@
 package vista;
-
-import vista.InicioEmp;
+import modelo.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 public class GestionEmp extends javax.swing.JFrame {
-
+ProductoDAO prodao = new ProductoDAO();
+EmpleadoDAO empdao = new EmpleadoDAO();
 
     public GestionEmp() {
         initComponents();
         this.setLocationRelativeTo(this);
         this.setTitle("Gestión de Productos");
+        llenarcbx();
     }
-
+public void llenarcbx() {
+    cbxid.removeAllItems(); 
+    cbxid.addItem("Seleccionar");
+    List<ProductoDTO> lista = prodao.listarTodoPro();
+    for (ProductoDTO pro : lista) {
+        cbxid.addItem(String.valueOf(pro.getId()));
+    }
+}
  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -18,12 +29,16 @@ public class GestionEmp extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cbxcat = new javax.swing.JComboBox<>();
+        cbxid = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtcant = new javax.swing.JTextField();
         btnania = new javax.swing.JButton();
         btnelim = new javax.swing.JButton();
+        txtnom = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtantcant = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,16 +53,20 @@ public class GestionEmp extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Gestion");
 
-        cbxcat.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbxcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxid.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cbxid.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxidItemStateChanged(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Seleccione categoría del producto");
+        jLabel6.setText("Seleccione ID del producto");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Ingrese cantidad del producto");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtcant.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         btnania.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnania.setText("Añadir");
@@ -59,32 +78,62 @@ public class GestionEmp extends javax.swing.JFrame {
 
         btnelim.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnelim.setText("Eliminar");
+        btnelim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnelimActionPerformed(evt);
+            }
+        });
+
+        txtnom.setEditable(false);
+        txtnom.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Nombre del Producto");
+
+        txtantcant.setEditable(false);
+        txtantcant.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("Cantidad del Producto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxcat, 0, 164, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addGap(82, 82, 82))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(btnania)
                 .addGap(115, 115, 115)
                 .addComponent(btnelim)
                 .addGap(135, 135, 135))
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtcant, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel8))
+                                        .addGap(46, 46, 46))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(81, 81, 81)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtantcant, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,15 +143,23 @@ public class GestionEmp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cbxcat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtantcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                    .addComponent(txtcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnania)
                     .addComponent(btnelim))
@@ -119,12 +176,57 @@ public class GestionEmp extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnaniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaniaActionPerformed
+    if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+        return;
+    }
+    int id = Integer.parseInt(cbxid.getSelectedItem().toString());
+    int cantidad = Integer.parseInt(txtcant.getText());
+    boolean actualizado = empdao.sumar(id, cantidad);
     
+    if (actualizado) {
+        JOptionPane.showMessageDialog(this, "Cantidad agregada correctamente");
+        txtcant.setText("");
+        txtcant.requestFocus();
+        cargar(id);
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al agregar cantidad");
+    }
     }//GEN-LAST:event_btnaniaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnelimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnelimActionPerformed
+ if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+        return;
+    }
+    int id = Integer.parseInt(cbxid.getSelectedItem().toString());
+    int cantidad = Integer.parseInt(txtcant.getText());
+    boolean actualizado = empdao.restar(id, cantidad);
+    if (actualizado) {
+        JOptionPane.showMessageDialog(this, "Cantidad eliminada correctamente");
+        cargar(id); 
+    } else {
+        JOptionPane.showMessageDialog(this, "La cantidad a eliminar no puede ser mayor al inventario");
+    }
+    }//GEN-LAST:event_btnelimActionPerformed
+
+    private void cbxidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxidItemStateChanged
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+        if (cbxid.getSelectedIndex() > 0) {
+            int id = Integer.parseInt(cbxid.getSelectedItem().toString());
+            cargar(id);
+        }
+    }
+    }//GEN-LAST:event_cbxidItemStateChanged
+
+    public void cargar(int id) {
+    List<ProductoDTO> lista = prodao.BuscarPro(id);
+    if (!lista.isEmpty()) {
+        ProductoDTO emp = lista.get(0);
+        txtnom.setText(emp.getNombre());
+        txtantcant.setText(String.valueOf(emp.getCantidad()));
+    }
+}
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -160,11 +262,15 @@ public class GestionEmp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnania;
     private javax.swing.JButton btnelim;
-    private javax.swing.JComboBox<String> cbxcat;
+    private javax.swing.JComboBox<String> cbxid;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtantcant;
+    private javax.swing.JTextField txtcant;
+    private javax.swing.JTextField txtnom;
     // End of variables declaration//GEN-END:variables
 }

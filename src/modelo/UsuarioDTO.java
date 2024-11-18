@@ -1,6 +1,7 @@
 package modelo;
 
 public class UsuarioDTO {
+    public int id;
     public String usuario;
     public String contra;
     public String rol;
@@ -30,6 +31,14 @@ public class UsuarioDTO {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

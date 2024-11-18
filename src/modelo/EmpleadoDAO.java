@@ -107,5 +107,200 @@ public class EmpleadoDAO {
         }
     }
     return false;
-}  
+} 
+  
+  public boolean sumar(int id, int cantidad) {
+    String sql = "UPDATE productos SET cant_pro = cant_pro + ? WHERE id_pro = ? AND est_pro = 'con stock';";
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, cantidad);
+        ps.setInt(2, id);
+        int filas = ps.executeUpdate();
+        return filas > 0;
+    } catch (Exception e) {
+        System.out.println("Error al agregar cantidad: " + e);
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return false;
+}
+
+    public boolean restar(int id, int cantidad) {
+    String restar = "UPDATE productos SET cant_pro = cant_pro - ? WHERE id_pro = ? AND est_pro = 'con stock' AND cant_pro >= ?;";
+    String cantidadbd = "SELECT cant_pro FROM productos WHERE id_pro = ?;";
+    String sinstock = "UPDATE productos SET est_pro = 'sin stock' WHERE id_pro = ? AND cant_pro = 0;";
+
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(restar);
+        ps.setInt(1, cantidad);
+        ps.setInt(2, id);
+        ps.setInt(3, cantidad);
+        int filas = ps.executeUpdate();
+        if (filas == 0) {
+            return false;
+        }
+        ps = con.prepareStatement(cantidadbd);
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        int cantbd = 0;
+        if (rs.next()) {
+            cantbd = rs.getInt(1);
+        }
+        if (cantbd == 0) {
+            ps = con.prepareStatement(sinstock);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+        return true;
+    } catch (Exception e) {
+        System.out.println("Error al eliminar cantidad: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return false;
+}
+
+ public boolean pedirPro(int idPro, int cantidad, int idProve, int idTienda, int idAdm) {
+    String sql = "INSERT INTO pedidos (cant_ped, fec_ped, est_ped, id_prove, id_tien, id_adm, id_pro) VALUES (?, NOW(), 'pendiente', ?, ?, ?, ?);";
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, cantidad);
+        ps.setInt(2, idProve);
+        ps.setInt(3, idTienda);
+        ps.setInt(4, idAdm);
+        ps.setInt(5, idPro);
+        int rowsInserted = ps.executeUpdate();
+        return rowsInserted > 0;
+    } catch (Exception e) {
+        System.out.println("Error al insertar pedido: " + e);
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return false;
+}
+
+public List<ProductoDTO> listarProSinStock() {
+    String sql = "SELECT id_pro, nom_pro FROM productos WHERE est_pro = 'sin stock';";
+    List<ProductoDTO> lista = new ArrayList<>();
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            ProductoDTO producto = new ProductoDTO();
+            producto.setId(rs.getInt("id_pro"));
+            producto.setNombre(rs.getString("nom_pro"));
+            lista.add(producto);
+        }
+    } catch (Exception e) {
+        System.out.println("Error listar productos sin stock: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return lista;
+}
+
+public boolean actualizarPed(int idPedido) {
+    String sql = "UPDATE pedidos SET est_ped = 'recibido' WHERE id_ped = ?;";
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, idPedido);
+        int rowsUpdated = ps.executeUpdate();
+        return rowsUpdated > 0;
+    } catch (Exception e) {
+        System.out.println("Error al actualizar estado del pedido: " + e);
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return false;
+}
+
+   public List<PedidoDTO> listarTodoPed() {
+    String sql = "SELECT * FROM empleados;";
+    List<PedidoDTO> lista = new ArrayList<>();
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            PedidoDTO ped = new PedidoDTO();
+            ped.setId(rs.getInt(1));
+            ped.setCantidad(rs.getInt(2));
+            ped.setFecha(rs.getString(3));
+            ped.setEstado(rs.getString(4));
+            ped.setIdprove(rs.getInt(5));
+            ped.setIdtienda(rs.getInt(6));
+            ped.setIdadm(rs.getInt(7));
+            ped.setIdpro(rs.getInt(8));
+            lista.add(ped);
+        }
+    } catch (Exception e) {
+        System.out.println("Error listar: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return lista;
+}
+public int obtenerIdAdministrador(int idUsuario) {
+    int idAdmin = -1;
+    String sql = "SELECT id_adm FROM administradores WHERE id_usu = ?";
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, idUsuario);
+        rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            idAdmin = rs.getInt(1);
+        }
+    } catch (Exception e) {
+        System.out.println("Error al obtener id del administrador: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return idAdmin;
+}
 }
