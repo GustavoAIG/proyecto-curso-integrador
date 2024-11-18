@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2024 a las 00:57:20
+-- Tiempo de generación: 18-11-2024 a las 14:49:11
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -79,7 +79,7 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`id_emp`, `nom_emp`, `ape_emp`, `id_usu`, `id_tien`) VALUES
-(1, 'Juan', 'Sanchez', 1, 1);
+(1, 'Juan', 'Sanchez', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -91,6 +91,7 @@ CREATE TABLE `pedidos` (
   `id_ped` int(11) NOT NULL,
   `cant_ped` int(11) NOT NULL,
   `fec_ped` date NOT NULL,
+  `est_ped` varchar(20) NOT NULL,
   `id_prove` int(11) NOT NULL,
   `id_tien` int(11) NOT NULL,
   `id_adm` int(11) NOT NULL,
@@ -113,9 +114,9 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id_ped`, `cant_ped`, `fec_ped`, `id_prove`, `id_tien`, `id_adm`, `id_pro`) VALUES
-(1, 10, '2024-09-04', 3, 1, 1, 4),
-(2, 25, '2024-09-25', 3, 2, 1, 4);
+INSERT INTO `pedidos` (`id_ped`, `cant_ped`, `fec_ped`, `est_ped`, `id_prove`, `id_tien`, `id_adm`, `id_pro`) VALUES
+(1, 10, '2024-09-04', 'pendiente', 3, 1, 1, 4),
+(2, 25, '2024-09-25', 'pendiente', 3, 2, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -144,11 +145,12 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_pro`, `nom_pro`, `cat_pro`, `pre_pro`, `cant_pro`, `est_pro`, `id_tien`) VALUES
-(1, 'Xiaomi Redmi Note 12', 'media', 799.9, 50, 'con stock', 1),
+(1, 'Xiaomi Redmi Note 12', 'Baja', 799.9, 40, 'con stock', 2),
 (2, 'Xiaomi 12T Pro', 'alta', 1599.9, 30, 'con stock', 1),
 (3, 'Xiaomi Mi 11 Lite', 'media', 999.9, 40, 'con stock', 1),
 (4, 'Xiaomi Redmi 9A', 'baja', 499.9, 100, 'con stock', 1),
-(5, 'Xiaomi Poco X5', 'media', 899.9, 60, 'con stock', 1);
+(5, 'Xiaomi Poco X5', 'media', 899.9, 60, 'con stock', 1),
+(6, 'Xiaomi LTE', 'media', 320.2, 15, 'sin stock', 1);
 
 -- --------------------------------------------------------
 
@@ -230,8 +232,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usu`, `nom_usu`, `cont_usu`, `rol_usu`) VALUES
-(1, 'empleado', '123', 'emple'),
-(2, 'administrador', '456', 'admin');
+(1, 'empleado', '1234567', 'emple'),
+(2, 'administrador', '4567891', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -316,7 +318,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
