@@ -91,13 +91,14 @@
           <Font name="Segoe UI" size="16" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="7">
             <StringItem index="0" value="Seleccionar"/>
             <StringItem index="1" value="Productos"/>
             <StringItem index="2" value="Empleados"/>
             <StringItem index="3" value="Tiendas"/>
             <StringItem index="4" value="Proveedores"/>
             <StringItem index="5" value="Pedidos"/>
+            <StringItem index="6" value="Productos sin Stock"/>
           </StringArray>
         </Property>
       </Properties>

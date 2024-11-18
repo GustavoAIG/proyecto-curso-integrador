@@ -1,8 +1,5 @@
 package vista;
 
-import vista.InicioSesion;
-
-
 public class InicioAdm extends javax.swing.JFrame {
 
     public InicioAdm() {
@@ -36,15 +33,35 @@ public class InicioAdm extends javax.swing.JFrame {
 
         btnactualizar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnactualizar.setText("Actualizar");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnactualizarActionPerformed(evt);
+            }
+        });
 
         btnlistar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnlistar.setText("Listar");
+        btnlistar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlistarActionPerformed(evt);
+            }
+        });
 
         btngenerar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btngenerar.setText("Generar");
+        btngenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngenerarActionPerformed(evt);
+            }
+        });
 
         btnpedir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnpedir.setText("Pedir");
+        btnpedir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnpedirActionPerformed(evt);
+            }
+        });
 
         btncerrarsesion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btncerrarsesion.setText("Cerrar Sesión");
@@ -100,7 +117,9 @@ public class InicioAdm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregisActionPerformed
-    
+        RegistrarAdm ini = new RegistrarAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnregisActionPerformed
 
     private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
@@ -108,6 +127,30 @@ public class InicioAdm extends javax.swing.JFrame {
         ini.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btncerrarsesionActionPerformed
+
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        ActualizarAdm ini = new ActualizarAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void btnlistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlistarActionPerformed
+        ListarAdm ini = new ListarAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnlistarActionPerformed
+
+    private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
+        ListarAdm ini = new ListarAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btngenerarActionPerformed
+
+    private void btnpedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpedirActionPerformed
+        PedirAdm ini = new PedirAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnpedirActionPerformed
 
     /**
      * @param args the command line arguments

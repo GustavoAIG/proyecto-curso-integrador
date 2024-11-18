@@ -93,6 +93,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Actualizar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnactualizarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnlistar">
       <Properties>
@@ -101,6 +104,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Listar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnlistarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btngenerar">
       <Properties>
@@ -109,6 +115,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Generar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btngenerarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnpedir">
       <Properties>
@@ -117,6 +126,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Pedir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnpedirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btncerrarsesion">
       <Properties>

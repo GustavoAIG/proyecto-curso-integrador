@@ -172,14 +172,14 @@ public class RegistrarAdm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -200,19 +200,19 @@ public class RegistrarAdm extends javax.swing.JFrame {
                                                 .addComponent(txtApellidoEmpleado)
                                                 .addComponent(txtNombreEmpleado)
                                                 .addComponent(txtContraUsuario)
-                                                .addComponent(txtUsuarioEmpleado)))
+                                                .addComponent(txtUsuarioEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jLabel3))
                                     .addGap(38, 38, 38)
                                     .addComponent(btnRegistrarUsuarioEmpleado)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
+                        .addGap(164, 164, 164)
                         .addComponent(jLabel10)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -251,7 +251,7 @@ public class RegistrarAdm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(cbxIdUsuarioEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -314,7 +314,7 @@ public class RegistrarAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarInformacionUsuarioEmpleadoActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-    InicioEmp objInicio = new InicioEmp();
+    InicioAdm objInicio = new InicioAdm();
     objInicio.setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_jLabel1MouseClicked

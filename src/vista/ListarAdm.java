@@ -1,17 +1,5 @@
 package vista;
-import modelo.ProveedorDTO;
-import modelo.TiendaDTO;
-import modelo.ProductoDTO;
-import modelo.PedidoDTO;
-import modelo.EmpleadoDTO;
-import modelo.TiendaDAO;
-import modelo.ProveedorDAO;
-import modelo.ProductoDAO;
-import modelo.PedidoDAO;
-import modelo.EmpleadoDAO;
-import controlador.*;
 import modelo.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +18,9 @@ public void mostrarCabecera(String tipo) {
 
         switch (tipo) {
             case "Productos":
+                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
+                break;
+            case "Productos sin Stock":
                 tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
                 break;
             case "Empleados":
@@ -55,6 +46,10 @@ public void mostrarCabecera(String tipo) {
                 case "Productos":
                     ProductoDTO prod = (ProductoDTO) obj;
                     tabla.addRow(new Object[]{prod.getId(), prod.getNombre(), prod.getPrecio(), prod.getCantidad(), prod.getIdtienda()});
+                    break;
+                case "Productos sin Stock":
+                    ProductoDTO produ = (ProductoDTO) obj;
+                    tabla.addRow(new Object[]{produ.getId(), produ.getNombre(), produ.getPrecio(), produ.getCantidad(), produ.getIdtienda()});
                     break;
                 case "Empleados":
                     EmpleadoDTO emp = (EmpleadoDTO) obj;
@@ -95,7 +90,7 @@ public void mostrarCabecera(String tipo) {
         jLabel2.setText("Listar");
 
         cbxlist.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbxlist.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Productos", "Empleados", "Tiendas", "Proveedores", "Pedidos" }));
+        cbxlist.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Productos", "Empleados", "Tiendas", "Proveedores", "Pedidos", "Productos sin Stock" }));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Seleccione categoría del producto");
@@ -191,6 +186,14 @@ public void mostrarCabecera(String tipo) {
                     JOptionPane.showMessageDialog(null, "No hay información", "Sin Datos", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     listarDatos(listaProductos, lis);
+                }
+                break;
+            case "Productos sin Stock":
+                List<ProductoDTO> listaProductosSinStock = new EmpleadoDAO().listarProSinStock();
+                if (listaProductosSinStock.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay información", "Sin Datos", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    listarDatos(listaProductosSinStock, lis);
                 }
                 break;
             case "Empleados":

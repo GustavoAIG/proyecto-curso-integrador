@@ -1,5 +1,6 @@
 package vista;
 
+import java.awt.event.KeyEvent;
 import modelo.UsuarioDTO;
 import modelo.UsuarioDAO;
 import static java.awt.image.ImageObserver.HEIGHT;
@@ -14,7 +15,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private static final String PASSWORD_EMPTY_MESSAGE = "La contraseña no puede estar vacía.";
     private static final int MIN_USERNAME_LENGTH = 4;
     private static final int MIN_PASSWORD_LENGTH = 6;
-    private static final int MAX_LENGTH = 10;
+    private static final int MAX_LENGTH = 20;
     public static int idusu = -1;
     public InicioSesion() {
         initComponents();
@@ -241,31 +242,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-       if (!validateInputs()) return;
-
-        UsuarioDAO ud = new UsuarioDAO();
-        UsuarioDTO u = ud.iniciarSesion(txtusuario.getText(), String.valueOf(txtcontra.getPassword()));
-
-        if (u == null) {
-            JOptionPane.showMessageDialog(this, INCORRECT_CREDENTIALS_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
-            txtusuario.setText(null);
-            txtcontra.setText(null);
-            txtusuario.requestFocus();
-        } else {
-            InicioSesion.idusu = u.getId();
-            switch (u.getRol()) {
-                case "emple":
-                    new InicioEmp().setVisible(true);
-                    break;
-                case "admin":
-                    new InicioAdm().setVisible(true);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this, "Rol desconocido", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-            }
-            setVisible(false);
-        }
+       iniciarSesion();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -279,6 +256,37 @@ public class InicioSesion extends javax.swing.JFrame {
     private void txtcontraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcontraMouseClicked
         txtcontra.setText("");
     }//GEN-LAST:event_txtcontraMouseClicked
+
+private void iniciarSesion() {
+    if (!validateInputs()) return;
+
+    UsuarioDAO ud = new UsuarioDAO();
+    UsuarioDTO u = ud.iniciarSesion(txtusuario.getText(), String.valueOf(txtcontra.getPassword()));
+
+    if (u == null) {
+        JOptionPane.showMessageDialog(this, INCORRECT_CREDENTIALS_MESSAGE, "Error", JOptionPane.ERROR_MESSAGE);
+        txtusuario.setText(null);
+        txtcontra.setText(null);
+        txtusuario.requestFocus();
+    } else {
+        InicioSesion.idusu = u.getId();
+        switch (u.getRol()) {
+            case "emple":
+                new InicioEmp().setVisible(true);
+                break;
+            case "admin":
+                new InicioAdm().setVisible(true);
+                break;
+            case "rh":
+                new RegistrarRH().setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Rol desconocido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+        setVisible(false);
+    }
+}
 
 
     public static void main(String args[]) {
