@@ -14,13 +14,13 @@ public class RegistrarEmp extends javax.swing.JFrame {
     private void cargarIdsTiendas() {
         ConexionBD conexionBD = new ConexionBD();
         try (Connection conn = conexionBD.ConectarBaseDatos()) {
-            String sql = "SELECT nom_tien FROM tiendas";
+            String sql = "SELECT id_tien FROM tiendas";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             cbxSedeProducto.removeAllItems(); // Limpiar el JComboBox antes de cargar los datos
             while (rs.next()) {
-                cbxSedeProducto.addItem(rs.getString("nom_tien")); // Añadir cada ID al JComboBox
+                cbxSedeProducto.addItem(rs.getString("id_tien")); // Añadir cada ID al JComboBox
             }
             
         } catch (SQLException e) {
@@ -42,12 +42,10 @@ public class RegistrarEmp extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtCodProducto = new javax.swing.JTextField();
         txtPrecioProducto = new javax.swing.JTextField();
         txtCantidadProducto = new javax.swing.JTextField();
         cbxCatProducto = new javax.swing.JComboBox<>();
@@ -70,9 +68,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Registrar");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Ingrese código del producto");
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Ingrese precio del producto");
 
@@ -84,8 +79,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Ingrese sede del producto");
-
-        txtCodProducto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         txtPrecioProducto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -124,7 +117,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -132,7 +124,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCodProducto)
                             .addComponent(txtPrecioProducto)
                             .addComponent(txtCantidadProducto)
                             .addComponent(cbxCatProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -150,11 +141,7 @@ public class RegistrarEmp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -190,7 +177,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
     // Obtener los valores de los campos de texto y ComboBox
-    String codigoProducto = txtCodProducto.getText();
     String nombreProducto = txtNombreProducto.getText();
     String precioProducto = txtPrecioProducto.getText();
     String cantidadProducto = txtCantidadProducto.getText();
@@ -198,7 +184,7 @@ public class RegistrarEmp extends javax.swing.JFrame {
     String sedeProducto = (String) cbxSedeProducto.getSelectedItem(); // Sede seleccionada
 
     // Validar que los campos no estén vacíos
-    if (codigoProducto.isEmpty() || nombreProducto.isEmpty() || precioProducto.isEmpty() || cantidadProducto.isEmpty() || 
+    if ( nombreProducto.isEmpty() || precioProducto.isEmpty() || cantidadProducto.isEmpty() || 
         categoriaProducto == null || sedeProducto == null) {
         JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -207,15 +193,15 @@ public class RegistrarEmp extends javax.swing.JFrame {
     // Insertar los datos en la base de datos
     ConexionBD conexionBD = new ConexionBD();
     try (Connection conn = conexionBD.ConectarBaseDatos()) {
-        String sql = "INSERT INTO productos (id_pro, nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO productos (nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, codigoProducto);
-        stmt.setString(2, nombreProducto);
-        stmt.setString(3, precioProducto);
-        stmt.setString(4, cantidadProducto);
-        stmt.setString(5, categoriaProducto);
-        stmt.setString(6, sedeProducto);
-        stmt.setString(7, "con stock");
+       
+        stmt.setString(1, nombreProducto);
+        stmt.setString(2, precioProducto);
+        stmt.setString(3, cantidadProducto);
+        stmt.setString(4, categoriaProducto);
+        stmt.setString(5, sedeProducto);
+        stmt.setString(6, "con stock");
 
         int filasInsertadas = stmt.executeUpdate();
         if (filasInsertadas > 0) {
@@ -268,14 +254,12 @@ public class RegistrarEmp extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxSedeProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtCantidadProducto;
-    private javax.swing.JTextField txtCodProducto;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtPrecioProducto;
     // End of variables declaration//GEN-END:variables
