@@ -94,7 +94,7 @@ public class UsuarioDAO {
                     u = new UsuarioDTO();
                     u.setUsuario(usu);
                     u.setContra(pas);
-                    u.setRol("admin");
+                    u.setRol(rol);
                 }
             }
         } catch (Exception e) {
@@ -160,6 +160,20 @@ public class UsuarioDAO {
         cerrarRecursos();
     }
     return idUsuario; // Devuelve el ID o -1 si no se encontró
+}
+    
+    public boolean existeUsuario(String usuario) {
+    try (Connection con = conexion.ConectarBaseDatos();
+        PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM usuarios WHERE nom_usu = ?")) {
+        stmt.setString(1, usuario);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Si el conteo es mayor a 0, el usuario ya existe
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
 }
 
 

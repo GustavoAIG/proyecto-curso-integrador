@@ -52,10 +52,10 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="cbxIdAdministrador" max="32767" attributes="0"/>
                                   <Component id="txtUsuarioAdmin" max="32767" attributes="0"/>
-                                  <Component id="txtContraAdmin" max="32767" attributes="0"/>
                                   <Component id="txtApellidoAdministrador" max="32767" attributes="0"/>
                                   <Component id="txtNombreAdministrador" max="32767" attributes="0"/>
-                                  <Component id="cbxIdTienda" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbxIdTienda" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtContraAdmin" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               <Component id="registrarUsuarioAdmin" min="-2" max="-2" attributes="0"/>
@@ -163,8 +163,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsuarioAdmin">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtContraAdmin">
-    </Component>
     <Component class="javax.swing.JButton" name="registrarUsuarioAdmin">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
@@ -228,6 +226,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Elige al usuario"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtContraAdmin">
     </Component>
   </SubComponents>
 </Form>

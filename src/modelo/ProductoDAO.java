@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.*;
 
 public class ProductoDAO {
@@ -111,4 +112,52 @@ public List<ProductoDTO> BuscarPro(int id) {
     }
     return lista;
 }
+
+public ProductoDTO registrarProducto(String nombreProducto, double precioProducto, int cantidadProducto, String categoriaProducto, int sedeProducto) {
+    ProductoDTO nuevoProducto = null;
+    try {
+        String sql = "INSERT INTO productos (nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro) VALUES (?, ?, ?, ?, ?, ?)";
+        con = conexion.ConectarBaseDatos();
+            ps = con.prepareStatement(sql);
+
+        // Establecer los parámetros
+        ps.setString(1, nombreProducto);
+        ps.setDouble(2, precioProducto);
+        ps.setInt(3, cantidadProducto);
+        ps.setString(4, categoriaProducto);
+        ps.setInt(5, sedeProducto);
+        ps.setString(6, "con stock");
+
+        // Ejecutar la consulta
+        int filasInsertadas = ps.executeUpdate();
+            if (filasInsertadas > 0) {
+                nuevoProducto = new ProductoDTO();
+                nuevoProducto.setNombre(nombreProducto);
+                nuevoProducto.setPrecio(precioProducto);
+                nuevoProducto.setCantidad(cantidadProducto);
+                nuevoProducto.setIdtienda(sedeProducto);
+                nuevoProducto.setEstado("con stock");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al registrar el producto: " + e.getMessage());
+        }  finally {
+            cerrarRecursos();
+        }
+        return nuevoProducto; 
+    }
+
+    private void cerrarRecursos() {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar los recursos: " + e.getMessage());
+        }
+    }
 }
+
+

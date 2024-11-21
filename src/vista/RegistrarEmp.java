@@ -4,28 +4,76 @@ import controlador.ConexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.ProductoDAO;
+import modelo.ProductoDTO;
+import modelo.TiendaDAO;
 import vista.InicioEmp;
-
 
 public class RegistrarEmp extends javax.swing.JFrame {
 
     private void cargarIdsTiendas() {
-        ConexionBD conexionBD = new ConexionBD();
-        try (Connection conn = conexionBD.ConectarBaseDatos()) {
-            String sql = "SELECT id_tien FROM tiendas";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        TiendaDAO tiendaDAO = new TiendaDAO();
+        List<String> idsTiendas = tiendaDAO.cargarNombresTiendas();
+        idsTiendas.forEach(cbxSedeProducto::addItem); // Agregar cada nombre al ComboBox
+    }
 
-            cbxSedeProducto.removeAllItems(); // Limpiar el JComboBox antes de cargar los datos
-            while (rs.next()) {
-                cbxSedeProducto.addItem(rs.getString("id_tien")); // Añadir cada ID al JComboBox
-            }
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los IDs de tiendas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    private boolean validarCampos() {
+         // Validar nombre del producto
+    String nombreProducto = txtNombreProducto.getText().trim();
+    if (nombreProducto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre del producto es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (nombreProducto.length() < 3 || nombreProducto.length() > 50) {
+        JOptionPane.showMessageDialog(this, "El nombre del producto debe tener entre 3 y 50 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (!nombreProducto.matches("^[a-zA-Z0-9\\s]+$")) {
+        JOptionPane.showMessageDialog(this, "El nombre del producto no debe contener caracteres especiales.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    // Validar precio del producto
+    String precioTexto = txtPrecioProducto.getText().trim();
+    try {
+        double precioProducto = Double.parseDouble(precioTexto);
+        if (precioProducto <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser un número mayor que 0.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un precio válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    // Validar cantidad del producto
+    String cantidadTexto = txtCantidadProducto.getText().trim();
+    try {
+        int cantidadProducto = Integer.parseInt(cantidadTexto);
+        if (cantidadProducto <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    // Validar selección de categoría y sede
+    if (cbxCatProducto.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una categoría para el producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    if (cbxSedeProducto.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una sede para el producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true;
+
     }
 
     public RegistrarEmp() {
@@ -35,7 +83,6 @@ public class RegistrarEmp extends javax.swing.JFrame {
         this.setTitle("Registro de Productos");
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -88,6 +135,7 @@ public class RegistrarEmp extends javax.swing.JFrame {
         cbxCatProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "baja", "media", "alta" }));
 
         cbxSedeProducto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cbxSedeProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--" }));
 
         btnregistrar.setBackground(new java.awt.Color(153, 0, 51));
         btnregistrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -176,45 +224,37 @@ public class RegistrarEmp extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
-    // Obtener los valores de los campos de texto y ComboBox
-    String nombreProducto = txtNombreProducto.getText();
-    String precioProducto = txtPrecioProducto.getText();
-    String cantidadProducto = txtCantidadProducto.getText();
-    String categoriaProducto = (String) cbxCatProducto.getSelectedItem(); // Categoría seleccionada
-    String sedeProducto = (String) cbxSedeProducto.getSelectedItem(); // Sede seleccionada
-
-    // Validar que los campos no estén vacíos
-    if ( nombreProducto.isEmpty() || precioProducto.isEmpty() || cantidadProducto.isEmpty() || 
-        categoriaProducto == null || sedeProducto == null) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Insertar los datos en la base de datos
-    ConexionBD conexionBD = new ConexionBD();
-    try (Connection conn = conexionBD.ConectarBaseDatos()) {
-        String sql = "INSERT INTO productos (nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro) VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-       
-        stmt.setString(1, nombreProducto);
-        stmt.setString(2, precioProducto);
-        stmt.setString(3, cantidadProducto);
-        stmt.setString(4, categoriaProducto);
-        stmt.setString(5, sedeProducto);
-        stmt.setString(6, "con stock");
-
-        int filasInsertadas = stmt.executeUpdate();
-        if (filasInsertadas > 0) {
-            JOptionPane.showMessageDialog(this, "Producto registrado correctamente.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al registrar el producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!validarCampos()) {
+            return;
         }
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al registrar el producto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_btnregistrarActionPerformed
+        try {
+            String nombreProducto = txtNombreProducto.getText().trim();
+            double precioProducto = Double.parseDouble(txtPrecioProducto.getText().trim());
+            int cantidadProducto = Integer.parseInt(txtCantidadProducto.getText().trim());
+            String categoriaProducto = cbxCatProducto.getSelectedItem().toString();
+            String sedeProducto = cbxSedeProducto.getSelectedItem().toString();
 
+            TiendaDAO tiendaDAO = new TiendaDAO();
+            int idTienda = tiendaDAO.obtenerIdTiendaPorNombre(sedeProducto);
+
+            if (idTienda == -1) {
+                JOptionPane.showMessageDialog(this, "Sede no encontrada.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            ProductoDAO productoDAO = new ProductoDAO();
+            ProductoDTO nuevoProducto = productoDAO.registrarProducto(nombreProducto, precioProducto, cantidadProducto, categoriaProducto, idTienda);
+
+            if (nuevoProducto != null) {
+                JOptionPane.showMessageDialog(this, "Producto registrado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar el producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnregistrarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -67,4 +67,44 @@ public boolean ActualizarEmp(EmpleadoDTO emp) {
     }
     return lista;
 }
+   
+   public AdministradorDTO registrarAdmin(String nombreAdministrador, String apellidoAdministrador, int idTienda, int idUsuarioAdministrador) {
+        AdministradorDTO nuevoAdministrador = null;
+        try {
+            String sql = "INSERT INTO administradores (nom_adm, ape_adm, id_tien, id_usu) VALUES (?, ?, ?, ?)";
+            con = conexion.ConectarBaseDatos();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nombreAdministrador);
+            ps.setString(2, apellidoAdministrador);
+            ps.setInt(3, idTienda);
+            ps.setInt(4, idUsuarioAdministrador);
+
+            int filasInsertadas = ps.executeUpdate();
+            if (filasInsertadas > 0) {
+                nuevoAdministrador = new AdministradorDTO();
+                nuevoAdministrador.setNombre(nombreAdministrador);
+                nuevoAdministrador.setApellido(apellidoAdministrador);
+                nuevoAdministrador.setIdtienda(idTienda);
+                nuevoAdministrador.setIdusu(idUsuarioAdministrador);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al registrar el administrador: " + e.getMessage());
+        } finally {
+            cerrarRecursos();
+        }
+        return nuevoAdministrador; 
+    }
+
+    private void cerrarRecursos() {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar los recursos: " + e.getMessage());
+        }
+    }
 }
