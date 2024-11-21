@@ -23,6 +23,9 @@ public void mostrarCabecera(String tipo) {
             case "Productos sin Stock":
                 tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
                 break;
+            case "Productos Eliminados":
+                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
+                break;
             case "Empleados":
                 tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Apellido", "ID_usuario", "Tienda"});
                 break;
@@ -50,6 +53,10 @@ public void mostrarCabecera(String tipo) {
                 case "Productos sin Stock":
                     ProductoDTO produ = (ProductoDTO) obj;
                     tabla.addRow(new Object[]{produ.getId(), produ.getNombre(), produ.getPrecio(), produ.getCantidad(), produ.getIdtienda()});
+                    break;
+                case "Productos Eliminados":
+                    ProductoDTO produu = (ProductoDTO) obj;
+                    tabla.addRow(new Object[]{produu.getId(), produu.getNombre(), produu.getPrecio(), produu.getCantidad(), produu.getIdtienda()});
                     break;
                 case "Empleados":
                     EmpleadoDTO emp = (EmpleadoDTO) obj;
@@ -90,7 +97,7 @@ public void mostrarCabecera(String tipo) {
         jLabel2.setText("Listar");
 
         cbxlist.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbxlist.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Productos", "Empleados", "Tiendas", "Proveedores", "Pedidos", "Productos sin Stock" }));
+        cbxlist.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Productos", "Empleados", "Tiendas", "Proveedores", "Pedidos", "Productos sin Stock", "Productos Eliminados" }));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Seleccione categoría del producto");
@@ -138,8 +145,8 @@ public void mostrarCabecera(String tipo) {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxlist, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addComponent(cbxlist, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(245, 245, 245)
                 .addComponent(btnlistar)
@@ -194,6 +201,14 @@ public void mostrarCabecera(String tipo) {
                     JOptionPane.showMessageDialog(null, "No hay información", "Sin Datos", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     listarDatos(listaProductosSinStock, lis);
+                }
+                break;
+            case "Productos Eliminados":
+                List<ProductoDTO> listaProductosEliminados = new EmpleadoDAO().listarProEliminado();
+                if (listaProductosEliminados.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay información", "Sin Datos", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    listarDatos(listaProductosEliminados, lis);
                 }
                 break;
             case "Empleados":

@@ -31,7 +31,8 @@ public class ProductoDAO {
             producto.setPrecio(rs.getDouble(4));
             producto.setCantidad(rs.getInt(5));
             producto.setEstado(rs.getString(6));
-            producto.setIdtienda(rs.getInt(7));
+            producto.setDisponibilidad(rs.getInt(7));
+            producto.setIdtienda(rs.getInt(8));
             lista.add(producto);
         }
     } catch (Exception e) {
@@ -63,7 +64,8 @@ public List<ProductoDTO> listarTodoPro() {
             producto.setPrecio(rs.getDouble(4));
             producto.setCantidad(rs.getInt(5));
             producto.setEstado(rs.getString(6));
-            producto.setIdtienda(rs.getInt(7));
+            producto.setDisponibilidad(rs.getInt(7));
+            producto.setIdtienda(rs.getInt(8));
             lista.add(producto);
         }
     } catch (Exception e) {
@@ -96,7 +98,8 @@ public List<ProductoDTO> BuscarPro(int id) {
             producto.setPrecio(rs.getDouble(4));
             producto.setCantidad(rs.getInt(5));
             producto.setEstado(rs.getString(6));
-            producto.setIdtienda(rs.getInt(7));
+            producto.setDisponibilidad(rs.getInt(7));
+            producto.setIdtienda(rs.getInt(8));
             lista.add(producto);
         }
     } catch (Exception e) {
@@ -116,19 +119,17 @@ public List<ProductoDTO> BuscarPro(int id) {
 public ProductoDTO registrarProducto(String nombreProducto, double precioProducto, int cantidadProducto, String categoriaProducto, int sedeProducto) {
     ProductoDTO nuevoProducto = null;
     try {
-        String sql = "INSERT INTO productos (nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO productos (nom_pro, pre_pro, cant_pro, cat_pro, id_tien, est_pro, disponibilidad_pro) VALUES (?, ?, ?, ?, ?, ?, ?)";
         con = conexion.ConectarBaseDatos();
             ps = con.prepareStatement(sql);
-
-        // Establecer los parámetros
         ps.setString(1, nombreProducto);
         ps.setDouble(2, precioProducto);
         ps.setInt(3, cantidadProducto);
         ps.setString(4, categoriaProducto);
         ps.setInt(5, sedeProducto);
         ps.setString(6, "con stock");
+        ps.setInt(7, 1);
 
-        // Ejecutar la consulta
         int filasInsertadas = ps.executeUpdate();
             if (filasInsertadas > 0) {
                 nuevoProducto = new ProductoDTO();
@@ -137,6 +138,7 @@ public ProductoDTO registrarProducto(String nombreProducto, double precioProduct
                 nuevoProducto.setCantidad(cantidadProducto);
                 nuevoProducto.setIdtienda(sedeProducto);
                 nuevoProducto.setEstado("con stock");
+                nuevoProducto.setDisponibilidad(1);
             }
         } catch (Exception e) {
             System.out.println("Error al registrar el producto: " + e.getMessage());

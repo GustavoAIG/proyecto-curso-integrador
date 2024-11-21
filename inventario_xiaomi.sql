@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2024 a las 14:49:11
+-- Tiempo de generación: 21-11-2024 a las 17:08:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -79,7 +79,7 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`id_emp`, `nom_emp`, `ape_emp`, `id_usu`, `id_tien`) VALUES
-(1, 'Juan', 'Sanchez', 1, 2);
+(1, 'Juan', 'Sanchezz', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -115,8 +115,9 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id_ped`, `cant_ped`, `fec_ped`, `est_ped`, `id_prove`, `id_tien`, `id_adm`, `id_pro`) VALUES
-(1, 10, '2024-09-04', 'pendiente', 3, 1, 1, 4),
-(2, 25, '2024-09-25', 'pendiente', 3, 2, 1, 4);
+(1, 10, '2024-09-04', 'recibido', 3, 1, 1, 4),
+(2, 25, '2024-09-25', 'pendiente', 3, 2, 1, 4),
+(3, 120, '2024-11-21', 'recibido', 1, 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -131,6 +132,7 @@ CREATE TABLE `productos` (
   `pre_pro` double NOT NULL,
   `cant_pro` int(11) NOT NULL,
   `est_pro` varchar(30) NOT NULL,
+  `disponibilidad_pro` int(1) NOT NULL,
   `id_tien` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,13 +146,16 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id_pro`, `nom_pro`, `cat_pro`, `pre_pro`, `cant_pro`, `est_pro`, `id_tien`) VALUES
-(1, 'Xiaomi Redmi Note 12', 'Baja', 799.9, 40, 'con stock', 2),
-(2, 'Xiaomi 12T Pro', 'alta', 1599.9, 30, 'con stock', 1),
-(3, 'Xiaomi Mi 11 Lite', 'media', 999.9, 40, 'con stock', 1),
-(4, 'Xiaomi Redmi 9A', 'baja', 499.9, 100, 'con stock', 1),
-(5, 'Xiaomi Poco X5', 'media', 899.9, 60, 'con stock', 1),
-(6, 'Xiaomi LTE', 'media', 320.2, 15, 'sin stock', 1);
+INSERT INTO `productos` (`id_pro`, `nom_pro`, `cat_pro`, `pre_pro`, `cant_pro`, `est_pro`, `disponibilidad_pro`, `id_tien`) VALUES
+(1, 'Xiaomi Redmi Note 12', 'Baja', 799.9, 40, 'con stock', 1, 2),
+(2, 'Xiaomi 12T Pro', 'alta', 1599.9, 30, 'con stock', 1, 1),
+(3, 'Xiaomi Mi 11 Lite', 'media', 999.9, 0, 'sin stock', 1, 1),
+(4, 'Xiaomi Redmi 9A', 'baja', 499.9, 100, 'con stock', 1, 1),
+(5, 'Xiaomi Poco X5', 'media', 899.9, 60, 'con stock', 1, 1),
+(6, 'Xiaomi LTE', 'media', 320.2, 0, 'sin stock', 1, 1),
+(7, 'cccc', 'baja', 190, 120, 'con stock', 0, 2),
+(8, 'zzzz', 'media', 90.3, 130, 'con stock', 0, 3),
+(9, 'qqqqw', 'media', 130, 240, 'con stock', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -312,13 +317,13 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id_ped` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ped` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`

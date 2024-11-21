@@ -230,6 +230,39 @@ public List<ProductoDTO> listarProSinStock() {
     return lista;
 }
 
+public List<ProductoDTO> listarProEliminado() {
+    String sql = "SELECT * FROM productos WHERE disponibilidad_pro = 0;";
+    List<ProductoDTO> lista = new ArrayList<>();
+    try {
+        con = conexion.ConectarBaseDatos();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            ProductoDTO producto = new ProductoDTO();
+            producto.setId(rs.getInt(1));
+            producto.setNombre(rs.getString(2));
+            producto.setCategoria(rs.getString(3));
+            producto.setPrecio(rs.getDouble(4));
+            producto.setCantidad(rs.getInt(5));
+            producto.setEstado(rs.getString(6));
+            producto.setDisponibilidad(rs.getInt(7));
+            producto.setIdtienda(rs.getInt(8));
+            lista.add(producto);
+        }
+    } catch (Exception e) {
+        System.out.println("Error listar productos sin stock: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception ex) {
+            System.out.println("Error cerrando la conexión: " + ex);
+        }
+    }
+    return lista;
+}
+
 public boolean actualizarPed(int idPedido) {
     String sql = "UPDATE pedidos SET est_ped = 'recibido' WHERE id_ped = ?;";
     try {
@@ -252,7 +285,7 @@ public boolean actualizarPed(int idPedido) {
 }
 
    public List<PedidoDTO> listarTodoPed() {
-    String sql = "SELECT * FROM empleados;";
+    String sql = "SELECT * FROM pedidos;";
     List<PedidoDTO> lista = new ArrayList<>();
     try {
         con = conexion.ConectarBaseDatos();

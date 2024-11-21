@@ -37,10 +37,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel6" min="-2" pref="301" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cbxlist" min="-2" pref="158" max="-2" attributes="0"/>
+                      <Component id="cbxlist" min="-2" pref="205" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="78" max="32767" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
           <Font name="Segoe UI" size="16" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="8">
             <StringItem index="0" value="Seleccionar"/>
             <StringItem index="1" value="Productos"/>
             <StringItem index="2" value="Empleados"/>
@@ -99,6 +99,7 @@
             <StringItem index="4" value="Proveedores"/>
             <StringItem index="5" value="Pedidos"/>
             <StringItem index="6" value="Productos sin Stock"/>
+            <StringItem index="7" value="Productos Eliminados"/>
           </StringArray>
         </Property>
       </Properties>

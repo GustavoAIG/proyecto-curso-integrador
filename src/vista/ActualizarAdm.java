@@ -21,12 +21,6 @@ public void llenarcbx() {
     for (EmpleadoDTO emp : lista) {
         cbxid.addItem(String.valueOf(emp.getId()));
     }
-    cbxidtienda.removeAllItems(); 
-    cbxidtienda.addItem("Seleccionar");
-    List<TiendaDTO> listaa = tiendadao.listarTodoTie();
-    for (TiendaDTO tien : listaa) {
-        cbxidtienda.addItem(String.valueOf(tien.getId()));
-    }
 }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +31,6 @@ public void llenarcbx() {
         cbxid = new javax.swing.JComboBox<>();
         txtnom = new javax.swing.JTextField();
         txtidusu = new javax.swing.JTextField();
-        cbxidtienda = new javax.swing.JComboBox<>();
         btnactualizar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -46,6 +39,7 @@ public void llenarcbx() {
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtape = new javax.swing.JTextField();
+        txtidtienda = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,8 +57,6 @@ public void llenarcbx() {
 
         txtidusu.setEditable(false);
         txtidusu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        cbxidtienda.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         btnactualizar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnactualizar.setText("Actualizar");
@@ -99,6 +91,9 @@ public void llenarcbx() {
 
         txtape.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        txtidtienda.setEditable(false);
+        txtidtienda.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,6 +106,9 @@ public void llenarcbx() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(btnactualizar))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -120,14 +118,11 @@ public void llenarcbx() {
                             .addComponent(jLabel10))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtidtienda)
                             .addComponent(txtnom)
                             .addComponent(txtidusu)
-                            .addComponent(cbxidtienda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtape)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(btnactualizar)))
+                            .addComponent(cbxid, 0, 154, Short.MAX_VALUE)
+                            .addComponent(txtape))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,8 +147,8 @@ public void llenarcbx() {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxidtienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(txtidtienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -180,7 +175,7 @@ public void llenarcbx() {
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     String nombre = txtnom.getText();
     String apellido = txtape.getText();
-    int idtien = Integer.parseInt(cbxidtienda.getSelectedItem().toString());
+    int idtien = Integer.parseInt(txtidtienda.getText());
 
     EmpleadoDTO emp = new EmpleadoDTO();
     emp.setId(id);
@@ -213,7 +208,7 @@ public void cargar(int id) {
         txtnom.setText(emp.getNombre());
         txtape.setText(emp.getApellido());
         txtidusu.setText(String.valueOf(emp.getIdusu()));
-        cbxidtienda.setSelectedItem(String.valueOf(emp.getIdtienda()));
+        txtidtienda.setText(emp.getIdtienda()+"");
     }
 }
 
@@ -252,7 +247,6 @@ public void cargar(int id) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnactualizar;
     private javax.swing.JComboBox<String> cbxid;
-    private javax.swing.JComboBox<String> cbxidtienda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -261,6 +255,7 @@ public void cargar(int id) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtape;
+    private javax.swing.JTextField txtidtienda;
     private javax.swing.JTextField txtidusu;
     private javax.swing.JTextField txtnom;
     // End of variables declaration//GEN-END:variables

@@ -1,7 +1,5 @@
 package vista;
-import controlador.*;
 import modelo.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,11 +14,13 @@ public class PedirAdm extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         this.setTitle("Pedir Productos");
         mostrarCabecera();
+        listarini();
     }
   public void mostrarCabecera(){
         tabla.addColumn("ID");
         tabla.addColumn("Cantidad");
         tabla.addColumn("Fecha");
+        tabla.addColumn("Estado");
         tabla.addColumn("Proveedor");
         tabla.addColumn("Tienda");
         tblpedidos.setModel(tabla);
@@ -228,8 +228,7 @@ public class PedirAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnpedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpedirActionPerformed
-     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
-    String nombrePro = txtnompro.getText();
+    int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     int cantidad = Integer.parseInt(txtcant.getText());
     int idProve = Integer.parseInt(cbxidproveedor.getSelectedItem().toString());
     int idTienda = Integer.parseInt(cbxidtienda.getSelectedItem().toString());
@@ -239,8 +238,8 @@ public class PedirAdm extends javax.swing.JFrame {
    
         if (pedidoRealizado) {
             JOptionPane.showMessageDialog(this, "Pedido realizado con éxito");
-            ArrayList<PedidoDTO> lista = new ArrayList<>();
-            listar(lista);
+        List<PedidoDTO> listaa = empdao.listarTodoPed();
+        listar(listaa);
         } else {
             JOptionPane.showMessageDialog(this, "Error al realizar el pedido");
         }
@@ -255,7 +254,7 @@ public class PedirAdm extends javax.swing.JFrame {
 
     if (actualizado) {
         JOptionPane.showMessageDialog(this, "Estado del pedido actualizado a 'recibido'");
-        ArrayList<PedidoDTO> lista = new ArrayList<>();
+        List<PedidoDTO> lista = empdao.listarTodoPed();
         listar(lista);
     } else {
         JOptionPane.showMessageDialog(this, "Error al actualizar el estado del pedido");
@@ -278,10 +277,16 @@ public class PedirAdm extends javax.swing.JFrame {
 private void listar(List<PedidoDTO> lista) {
     tabla.getDataVector().removeAllElements();
     for (PedidoDTO pedido : lista) {
-        Object[] data = {pedido.getId(), pedido.getCantidad(), pedido.getFecha(), 
+        Object[] data = {pedido.getId(), pedido.getCantidad(), pedido.getFecha(), pedido.getEstado(),
                          pedido.getIdprove(), pedido.getIdtienda()};
         tabla.addRow(data);
     }
+    tabla.fireTableDataChanged();
+}
+
+public void listarini(){
+    List<PedidoDTO> lista = empdao.listarTodoPed();
+        listar(lista);
 }
 
     public static void main(String args[]) {

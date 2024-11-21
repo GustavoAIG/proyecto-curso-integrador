@@ -128,8 +128,8 @@ public class BuscarEmp extends javax.swing.JFrame {
 private void listar(List<ProductoDTO> lista) {
     tabla.getDataVector().removeAllElements();
     for (ProductoDTO producto : lista) {
-        Object[] data = {producto.getId(), producto.getNombre(), producto.getCategoria(), 
-                         producto.getPrecio(), producto.getCantidad(), producto.getIdtienda()};
+        Object[] data = {producto.getId(), producto.getNombre(), producto.getPrecio(), 
+                    producto.getCantidad(), producto.getIdtienda()};
         tabla.addRow(data);
     }
 }
