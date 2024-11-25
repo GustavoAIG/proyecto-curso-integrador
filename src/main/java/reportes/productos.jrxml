@@ -1,0 +1,117 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="empleados" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a5c9b49-9dc5-422a-ac69-e92cf61ef530">
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50.0" bold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18.0" bold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14.0" bold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle mode="Opaque" backcolor="#F0EFEF">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="id_pro" class="java.lang.Integer"/>
+	<field name="nom_pro" class="java.lang.String"/>
+	<field name="cat_pro" class="java.lang.String"/>
+	<field name="pre_pro" class="java.lang.Double"/>
+	<field name="est_pro" class="java.lang.String"/>
+	<field name="cant_pro" class="java.lang.Integer"/>
+	<field name="id_tienda" class="java.lang.Integer"/>
+	<background splitType="Stretch"/>
+	<title height="102" splitType="Stretch">
+		<element kind="image" uuid="651ccc4b-e999-40fe-bcbf-1f25bcfc98af" x="725" y="0" width="77" height="102" onErrorType="Icon">
+			<expression><![CDATA["src/imagenes/logo.png"]]></expression>
+		</element>
+		<element kind="frame" uuid="d8d9e644-3a32-491d-97cb-a277aff17133" mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000">
+			<element kind="staticText" uuid="27d8f6ee-f0a9-44f6-a160-1763c3b00f30" x="0" y="0" width="370" height="66" bold="false" vTextAlign="Bottom" style="Title">
+				<text><![CDATA[Coolbox]]></text>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4" style="Title"/>
+			</element>
+			<element kind="staticText" uuid="cfa21334-0634-4605-9ea7-aca4981f67e4" x="370" y="37" width="316" height="29" fontSize="22.0" bold="false" hTextAlign="Right" style="SubTitle">
+				<text><![CDATA[Lista de Productos]]></text>
+			</element>
+		</element>
+		<element kind="frame" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1" mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000">
+			<element kind="textField" uuid="a33fce3b-20c1-4696-873a-fe134d1e7d88" x="553" y="12" width="144" height="20" forecolor="#FFFFFF" fontSize="12.0" pattern="EEEEE dd MMMMM yyyy" hTextAlign="Right">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="76" splitType="Stretch">
+		<element kind="staticText" uuid="0b1be67a-a162-464b-9a77-484235d973e0" x="60" y="0" width="90" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Nombre]]></text>
+		</element>
+		<element kind="staticText" uuid="21374ea6-ea28-4d1a-87fa-2daf631bfe7d" x="150" y="0" width="130" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Categoria]]></text>
+		</element>
+		<element kind="staticText" uuid="ac021c8b-fd69-4b43-ac68-d7b3117ab05e" x="280" y="0" width="100" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Precio]]></text>
+		</element>
+		<element kind="staticText" uuid="0f58bdaa-c958-4971-a604-3d9bfc3b7704" x="480" y="0" width="90" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Estado]]></text>
+		</element>
+		<element kind="staticText" uuid="9098930e-fae4-43ba-8a65-21505fcac85e" x="570" y="0" width="150" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Disponibilidad]]></text>
+		</element>
+		<element kind="staticText" uuid="8d0ea250-7cb8-473c-898a-41e055f746b3" x="0" y="0" width="60" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[ID]]></text>
+		</element>
+		<element kind="staticText" uuid="fde5efa2-1e78-4206-8e02-f38c53642711" x="380" y="0" width="100" height="30" fontSize="20.0" bold="true">
+			<text><![CDATA[Cantidad]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<element kind="frame" uuid="34a2ae4b-4055-476b-8676-d499f6af510b" mode="Opaque" x="0" y="-46" width="797" height="55" style="Row">
+				<element kind="textField" uuid="3a87225f-32e3-44dc-99a6-fc27083543ec" x="0" y="0" width="60" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{id_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5605ba55-9a26-443f-a42c-c38aa798dde1"/>
+				</element>
+				<element kind="textField" uuid="907de0a6-3408-45a3-973d-65f2b76c4d8c" x="60" y="0" width="90" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{nom_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4f14b10-4544-411b-a059-e51679754260"/>
+				</element>
+				<element kind="textField" uuid="b8ee9a9d-32b5-4b7c-b912-19c9089653ec" x="150" y="0" width="130" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{cat_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b5841ddd-c060-423c-8b38-c3c97cc3faa8"/>
+				</element>
+				<element kind="textField" uuid="4d22ded6-38be-4442-8821-21a1ab76dc1a" x="280" y="0" width="100" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{pre_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ee44e0c-1eae-4b9b-8c7e-c78f99371a07"/>
+				</element>
+				<element kind="textField" uuid="06a2a349-430d-497c-bdbb-2f452a901a32" x="380" y="0" width="100" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{cant_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8b58b554-df26-479c-9eb1-cbc845f5670a"/>
+				</element>
+				<element kind="textField" uuid="b5419fae-0315-49e2-be8e-5e585630c2aa" x="480" y="0" width="90" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{est_pro}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f04eb4b2-4dd0-44dd-a5a3-7e4f06701460"/>
+				</element>
+				<element kind="textField" uuid="ea9867ec-e349-44c2-b939-2bbd12147332" x="570" y="0" width="150" height="30" fontSize="15.0" textAdjust="StretchHeight" vTextAlign="Middle">
+					<expression><![CDATA[$F{id_tienda}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d3718f92-738c-461a-ba3a-e77557d91b88"/>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="7" splitType="Stretch">
+		<element kind="line" uuid="501ac6c4-e9d4-43cb-ba6b-7f2f44394cf3" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="25" splitType="Stretch">
+		<element kind="frame" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0" mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000">
+			<element kind="textField" uuid="b5521ea6-5f36-4864-856f-58d0bcd011f2" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="e625ea3c-1741-4cfe-81cf-fbbdd00162c8" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="0c9f7e91-d3f5-47f9-82b7-0b2b3a43a5d6" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>
