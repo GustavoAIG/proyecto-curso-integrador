@@ -1,0 +1,28 @@
+# Archivos y carpetas generados por NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.build-impl.xml
+
+# Archivos de salida del compilador
+*.class
+
+# Archivos de configuración específicos del entorno
+*.log
+*.properties
+
+# Archivos de Maven
+/target/
+/*.iml
+.idea/
+/*.ipr
+/*.iws
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración específicos de usuarios de NetBeans
+*.swp
+*~
