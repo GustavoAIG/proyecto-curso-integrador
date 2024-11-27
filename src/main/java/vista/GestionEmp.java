@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class GestionEmp extends javax.swing.JFrame {
 ProductoDAO prodao = new ProductoDAO();
 EmpleadoDAO empdao = new EmpleadoDAO();
+RegistroDAO regdao = new RegistroDAO();
 
     public GestionEmp() {
         initComponents();
@@ -23,6 +24,30 @@ public void llenarcbx() {
     }
 }
  
+private boolean validarCampos() {
+    if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+        return false;
+    }
+
+    try {
+        int cantidad = Integer.parseInt(txtcant.getText());
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero");
+            txtcant.setText("");
+            txtcant.requestFocus();
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese solo números en el campo de cantidad");
+        txtcant.setText("");
+        txtcant.requestFocus();
+        return false;
+    }
+
+    return true;
+}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,35 +201,60 @@ public void llenarcbx() {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnaniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaniaActionPerformed
-    if (cbxid.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+   if (!validarCampos()) {
         return;
     }
+
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     int cantidad = Integer.parseInt(txtcant.getText());
     boolean actualizado = empdao.sumar(id, cantidad);
-    
+
     if (actualizado) {
         JOptionPane.showMessageDialog(this, "Cantidad agregada correctamente");
         txtcant.setText("");
         txtcant.requestFocus();
         cargar(id);
+
+        RegistroDTO registro = new RegistroDTO();
+        registro.setNombrepro(txtnom.getText());
+        registro.setCantidad(cantidad);
+        registro.setOperacion("entrada");
+        registro.setId_pro(id);
+
+        boolean registrado = regdao.registrarOperacion(registro);
+        if (!registrado) {
+            JOptionPane.showMessageDialog(this, "Error al registrar el ingreso en la tabla de registros");
+        }
     } else {
         JOptionPane.showMessageDialog(this, "Error al agregar cantidad");
     }
     }//GEN-LAST:event_btnaniaActionPerformed
 
     private void btnelimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnelimActionPerformed
- if (cbxid.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+     if (!validarCampos()) {
         return;
     }
+
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     int cantidad = Integer.parseInt(txtcant.getText());
     boolean actualizado = empdao.restar(id, cantidad);
+
     if (actualizado) {
         JOptionPane.showMessageDialog(this, "Cantidad eliminada correctamente");
-        cargar(id); 
+        txtcant.setText("");
+        txtcant.requestFocus();
+        cargar(id);
+
+        RegistroDTO registro = new RegistroDTO();
+        registro.setNombrepro(txtnom.getText());
+        registro.setCantidad(cantidad);
+        registro.setOperacion("salida");
+        registro.setId_pro(id);
+
+        boolean registrado = regdao.registrarOperacion(registro);
+        if (!registrado) {
+            JOptionPane.showMessageDialog(this, "Error al registrar la salida en la tabla de registros");
+        }
     } else {
         JOptionPane.showMessageDialog(this, "La cantidad a eliminar no puede ser mayor al inventario");
     }

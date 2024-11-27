@@ -23,6 +23,31 @@ public void llenarcbx() {
     }
 }
 
+private boolean validarCampos() {
+    // Validar que se seleccione un ID válido
+    if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un ID de empleado válido");
+        return false;
+    }
+
+    // Validar que el nombre solo contenga letras y espacios
+    String nombre = txtnom.getText().trim();
+    if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(this, "El nombre solo puede contener letras y espacios");
+        return false;
+    }
+
+    // Validar que el apellido solo contenga letras y espacios
+    String apellido = txtape.getText().trim();
+    if (!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(this, "El apellido solo puede contener letras y espacios");
+        return false;
+    }
+
+    return true;
+}
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,7 +112,7 @@ public void llenarcbx() {
         });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("Seleccione ID de tienda");
+        jLabel10.setText("ID de tienda");
 
         txtape.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -110,12 +135,12 @@ public void llenarcbx() {
                         .addComponent(btnactualizar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtidtienda)
@@ -168,10 +193,10 @@ public void llenarcbx() {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-    if (cbxid.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione un ID de empleado válido");
+   if (!validarCampos()) {
         return;
     }
+
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     String nombre = txtnom.getText();
     String apellido = txtape.getText();

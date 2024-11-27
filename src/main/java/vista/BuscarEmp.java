@@ -147,7 +147,7 @@ if (txtcod.getText().isEmpty()) {
         if (lista.size() != 0) {
             listar(lista);
         } else {
-            JOptionPane.showMessageDialog(null, "No hay productos con esa categoría", "Sin existencias", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay productos con ese código", "Sin existencias", JOptionPane.INFORMATION_MESSAGE);
             txtcod.setText("");
 txtcod.requestFocus();
         }

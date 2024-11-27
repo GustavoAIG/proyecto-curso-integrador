@@ -47,6 +47,38 @@ public class PedirAdm extends javax.swing.JFrame {
         cbxidproveedor.addItem(String.valueOf(prove.getId()));
     }
 } 
+   
+   private boolean validarCampos() {
+    if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona un ID válido.");
+        return false;
+    }
+
+    if (cbxidproveedor.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona un proveedor válido.");
+        return false;
+    }
+
+    if (cbxidtienda.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una tienda válida.");
+        return false;
+    }
+
+    try {
+        int cantidad = Integer.parseInt(txtcant.getText());
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero.");
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa solo números en la cantidad.");
+        return false;
+    }
+
+    return true;
+}
+
+   
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -228,6 +260,10 @@ public class PedirAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnpedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpedirActionPerformed
+    if (!validarCampos()) {
+        return; 
+    }
+        
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     int cantidad = Integer.parseInt(txtcant.getText());
     int idProve = Integer.parseInt(cbxidproveedor.getSelectedItem().toString());

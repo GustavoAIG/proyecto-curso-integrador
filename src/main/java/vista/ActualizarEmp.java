@@ -25,6 +25,34 @@ public void llenarcbx() {
     }
 }
 
+private boolean validarCampos() {
+    // Validar que se seleccione un ID válido
+    if (cbxid.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+        return false;
+    }
+
+    // Validar que el campo de nombre solo tenga letras, números y espacios
+    String nombre = txtnom.getText().trim();
+    if (!nombre.matches("[a-zA-Z0-9 ]+")) {
+        JOptionPane.showMessageDialog(this, "El nombre solo puede contener letras, números y espacios");
+        return false;
+    }
+
+    // Validar que el precio sea un número válido
+    try {
+        double precio = Double.parseDouble(txtpre.getText());
+        if (precio <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser mayor a 0");
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el precio");
+        return false;
+    }
+    return true;
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -79,13 +107,13 @@ public void llenarcbx() {
         jLabel4.setText("Ingrese precio del producto");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Ingrese cantidad del producto");
+        jLabel5.setText("Cantidad del producto");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Seleccione categoría del producto");
+        jLabel6.setText("Categoría del producto");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel7.setText("Seleccione ID de tienda");
+        jLabel7.setText("ID de tienda");
 
         cbxid.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cbxid.addItemListener(new java.awt.event.ItemListener() {
@@ -115,7 +143,8 @@ public void llenarcbx() {
                         .addGap(16, 16, 16)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,22 +158,19 @@ public void llenarcbx() {
                                         .addComponent(jLabel3)
                                         .addGap(38, 38, 38)
                                         .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jLabel5))
-                                                .addGap(20, 20, 20))
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtcant, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(txtpre, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(lbltienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lblcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel5))
+                                    .addComponent(jLabel6)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtcant)
+                            .addComponent(txtpre)
+                            .addComponent(lbltienda, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(lblcategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(99, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(219, 219, 219)
@@ -197,10 +223,10 @@ public void llenarcbx() {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-    if (cbxid.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
+   if (!validarCampos()) {
         return;
     }
+
     int id = Integer.parseInt(cbxid.getSelectedItem().toString());
     String nombre = txtnom.getText();
     double precio = Double.parseDouble(txtpre.getText());
