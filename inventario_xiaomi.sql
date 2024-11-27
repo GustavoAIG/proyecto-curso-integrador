@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2024 a las 17:08:36
+-- Tiempo de generación: 27-11-2024 a las 04:47:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -115,7 +115,7 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id_ped`, `cant_ped`, `fec_ped`, `est_ped`, `id_prove`, `id_tien`, `id_adm`, `id_pro`) VALUES
-(1, 10, '2024-09-04', 'recibido', 3, 1, 1, 4),
+(1, 10, '2024-08-13', 'recibido', 3, 1, 1, 4),
 (2, 25, '2024-09-25', 'pendiente', 3, 2, 1, 4),
 (3, 120, '2024-11-21', 'recibido', 1, 1, 1, 3);
 
@@ -149,10 +149,10 @@ CREATE TABLE `productos` (
 INSERT INTO `productos` (`id_pro`, `nom_pro`, `cat_pro`, `pre_pro`, `cant_pro`, `est_pro`, `disponibilidad_pro`, `id_tien`) VALUES
 (1, 'Xiaomi Redmi Note 12', 'Baja', 799.9, 40, 'con stock', 1, 2),
 (2, 'Xiaomi 12T Pro', 'alta', 1599.9, 30, 'con stock', 1, 1),
-(3, 'Xiaomi Mi 11 Lite', 'media', 999.9, 0, 'sin stock', 1, 1),
+(3, 'Xiaomi Mi 11 Lite', 'media', 999.9, 30, 'con stock', 1, 1),
 (4, 'Xiaomi Redmi 9A', 'baja', 499.9, 100, 'con stock', 1, 1),
 (5, 'Xiaomi Poco X5', 'media', 899.9, 60, 'con stock', 1, 1),
-(6, 'Xiaomi LTE', 'media', 320.2, 0, 'sin stock', 1, 1),
+(6, 'Xiaomi LTE', 'media', 320.2, 70, 'con stock', 1, 1),
 (7, 'cccc', 'baja', 190, 120, 'con stock', 0, 2),
 (8, 'zzzz', 'media', 90.3, 130, 'con stock', 0, 3),
 (9, 'qqqqw', 'media', 130, 240, 'con stock', 1, 3);
@@ -188,6 +188,34 @@ INSERT INTO `proveedores` (`id_prove`, `nom_prove`, `anio_prove`, `id_pro`, `id_
 (2, 'Globomatik', 2021, 2, 3),
 (3, 'Intcomex', 2018, 5, 3),
 (4, 'Solutek', 2023, 4, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registros`
+--
+
+CREATE TABLE `registros` (
+  `id_reg` int(11) NOT NULL,
+  `nom_reg` varchar(25) NOT NULL,
+  `fec_reg` date NOT NULL,
+  `cant_reg` int(5) NOT NULL,
+  `oper_reg` varchar(15) NOT NULL,
+  `id_pro` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `registros`:
+--   `id_pro`
+--       `productos` -> `id_pro`
+--
+
+--
+-- Volcado de datos para la tabla `registros`
+--
+
+INSERT INTO `registros` (`id_reg`, `nom_reg`, `fec_reg`, `cant_reg`, `oper_reg`, `id_pro`) VALUES
+(1, 'Xiaomi Redmi Note 12', '2024-10-08', 120, 'entrada', 1);
 
 -- --------------------------------------------------------
 
@@ -286,6 +314,13 @@ ALTER TABLE `proveedores`
   ADD KEY `id_tien` (`id_tien`);
 
 --
+-- Indices de la tabla `registros`
+--
+ALTER TABLE `registros`
+  ADD PRIMARY KEY (`id_reg`),
+  ADD KEY `id_pro` (`id_pro`);
+
+--
 -- Indices de la tabla `tiendas`
 --
 ALTER TABLE `tiendas`
@@ -330,6 +365,12 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `proveedores`
   MODIFY `id_prove` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `registros`
+--
+ALTER TABLE `registros`
+  MODIFY `id_reg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tiendas`
@@ -382,6 +423,12 @@ ALTER TABLE `productos`
 ALTER TABLE `proveedores`
   ADD CONSTRAINT `proveedores_ibfk_1` FOREIGN KEY (`id_pro`) REFERENCES `productos` (`id_pro`),
   ADD CONSTRAINT `proveedores_ibfk_2` FOREIGN KEY (`id_tien`) REFERENCES `tiendas` (`id_tien`);
+
+--
+-- Filtros para la tabla `registros`
+--
+ALTER TABLE `registros`
+  ADD CONSTRAINT `registros_ibfk_1` FOREIGN KEY (`id_pro`) REFERENCES `productos` (`id_pro`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
