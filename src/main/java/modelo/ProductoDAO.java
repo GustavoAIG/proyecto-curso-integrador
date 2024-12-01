@@ -16,7 +16,7 @@ public class ProductoDAO {
     ResultSet rs;
     
     public List<ProductoDTO> listarPorCategoria(String categoria) {
-    String sql = "SELECT * FROM productos WHERE cat_pro = ? AND est_pro = 'con stock';";
+    String sql = "SELECT p.*, t.nom_tien FROM productos p INNER JOIN tiendas t ON p.id_tien = t.id_tien WHERE p.cat_pro = ? AND p.est_pro = 'con stock';";
     List<ProductoDTO> lista = new ArrayList<>();
     try {
         con = conexion.ConectarBaseDatos();
@@ -25,15 +25,16 @@ public class ProductoDAO {
         rs = ps.executeQuery();
         while (rs.next()) {
             ProductoDTO producto = new ProductoDTO();
-            producto.setId(rs.getInt(1));
-            producto.setNombre(rs.getString(2));
-            producto.setCategoria(rs.getString(3));
-            producto.setPrecio(rs.getDouble(4));
-            producto.setCantidad(rs.getInt(5));
-            producto.setEstado(rs.getString(6));
-            producto.setDisponibilidad(rs.getInt(7));
-            producto.setIdtienda(rs.getInt(8));
-            lista.add(producto);
+        producto.setId(rs.getInt("id_pro"));  
+        producto.setNombre(rs.getString("nom_pro"));  
+        producto.setCategoria(rs.getString("cat_pro")); 
+        producto.setPrecio(rs.getDouble("pre_pro"));  
+        producto.setCantidad(rs.getInt("cant_pro")); 
+        producto.setEstado(rs.getString("est_pro"));  
+        producto.setDisponibilidad(rs.getInt("disponibilidad_pro")); 
+        producto.setIdtienda(rs.getInt("id_tien"));  
+        producto.setNomtienda(rs.getString("nom_tien"));  
+        lista.add(producto);
         }
     } catch (Exception e) {
         System.out.println("Error listar: " + e);
@@ -50,7 +51,8 @@ public class ProductoDAO {
 }
 
 public List<ProductoDTO> listarTodoPro() {
-    String sql = "SELECT * FROM productos WHERE est_pro = 'con stock';";
+String sql = "SELECT p.*, t.nom_tien FROM productos p INNER JOIN tiendas t ON p.id_tien = t.id_tien WHERE p.est_pro = 'con stock' ORDER BY p.id_pro ASC;";
+
     List<ProductoDTO> lista = new ArrayList<>();
     try {
         con = conexion.ConectarBaseDatos();
@@ -66,6 +68,7 @@ public List<ProductoDTO> listarTodoPro() {
             producto.setEstado(rs.getString(6));
             producto.setDisponibilidad(rs.getInt(7));
             producto.setIdtienda(rs.getInt(8));
+            producto.setNomtienda(rs.getString(9));
             lista.add(producto);
         }
     } catch (Exception e) {

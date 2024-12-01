@@ -21,10 +21,12 @@ public void llenarcbx() {
     cbxid.addItem("Seleccionar");
     List<ProductoDTO> lista = prodao.listarTodoPro();
     for (ProductoDTO pro : lista) {
-        cbxid.addItem(String.valueOf(pro.getId()));
+        if (pro.getCantidad() > 0) { // Solo incluir productos con cantidad mayor a 0.
+            cbxid.addItem(pro.getId() + "");
+        }
     }
 }
- 
+
 private boolean validarCampos() {
     if (cbxid.getSelectedIndex() == 0) {
         JOptionPane.showMessageDialog(this, "Seleccione un ID de producto válido");
@@ -175,8 +177,8 @@ private boolean validarCampos() {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -285,20 +287,36 @@ private boolean validarCampos() {
     }//GEN-LAST:event_btnaniaActionPerformed
 
     private void btnelimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnelimActionPerformed
-     if (!validarCampos()) {
-        return;
-    }
+if (!validarCampos()) {
+    return;
+}
 
-    int id = Integer.parseInt(cbxid.getSelectedItem().toString());
-    int cantidad = Integer.parseInt(txtcant.getText());
+int id = Integer.parseInt(cbxid.getSelectedItem().toString());
+int cantidad = Integer.parseInt(txtcant.getText());
+
+if (cantidad == Integer.parseInt(txtantcant.getText())) { 
     boolean actualizado = empdao.restar(id, cantidad);
-
+    if (actualizado) {
+        JOptionPane.showMessageDialog(this, "Producto eliminado completamente del inventario");
+        
+        // Limpiar los campos y resetear el combobox.
+        txtnom.setText("");
+        txtantcant.setText("");
+        txtcant.setText("");
+        cbxid.setSelectedIndex(0); // Regresa a "Seleccionar".
+        llenarcbx();
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al eliminar la cantidad del inventario");
+    }
+} else {
+    boolean actualizado = empdao.restar(id, cantidad);
     if (actualizado) {
         JOptionPane.showMessageDialog(this, "Cantidad eliminada correctamente");
         txtcant.setText("");
         txtcant.requestFocus();
-        cargar(id);
+        cargar(id); 
 
+        // Registrar la operación.
         RegistroDTO registro = new RegistroDTO();
         registro.setNombrepro(txtnom.getText());
         registro.setCantidad(cantidad);
@@ -312,6 +330,7 @@ private boolean validarCampos() {
     } else {
         JOptionPane.showMessageDialog(this, "La cantidad a eliminar no puede ser mayor al inventario");
     }
+}
     }//GEN-LAST:event_btnelimActionPerformed
 
     private void cbxidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxidItemStateChanged

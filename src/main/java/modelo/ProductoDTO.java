@@ -8,6 +8,7 @@ private double precio;
 private int cantidad;
 private String estado;
 private int disponibilidad;
+private String nomtienda;
 private int idtienda;
 
 //constructor vacio
@@ -16,20 +17,22 @@ private int idtienda;
 
 //constructor para agregar
 
-    public ProductoDTO(String nombre, String categoria, double precio, int cantidad, String estado, int disponibilidad, int idtienda) {
+    public ProductoDTO(String nombre, String categoria, double precio, int cantidad, String estado, int disponibilidad, String nomtienda, int idtienda) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.cantidad = cantidad;
         this.estado = estado;
         this.disponibilidad = disponibilidad;
+        this.nomtienda = nomtienda;
         this.idtienda = idtienda;
     }
+
 
  
 //constructor actualizar
 
-    public ProductoDTO(int id, String nombre, String categoria, double precio, int cantidad, String estado, int disponibilidad, int idtienda) {
+    public ProductoDTO(int id, String nombre, String categoria, double precio, int cantidad, String estado, int disponibilidad, String nomtienda, int idtienda) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -37,12 +40,21 @@ private int idtienda;
         this.cantidad = cantidad;
         this.estado = estado;
         this.disponibilidad = disponibilidad;
+        this.nomtienda = nomtienda;
         this.idtienda = idtienda;
     }
 
- 
 //getter y setter
 
+    public String getNomtienda() {
+        return nomtienda;
+    }
+
+    public void setNomtienda(String nomtienda) {
+        this.nomtienda = nomtienda;
+    }
+    
+    
     public int getId() {
         return id;
     }

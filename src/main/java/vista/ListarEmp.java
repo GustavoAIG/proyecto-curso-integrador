@@ -24,7 +24,8 @@ public class ListarEmp extends javax.swing.JFrame {
         tabla.addColumn("Nombre");
         tabla.addColumn("Precio");
         tabla.addColumn("Cantidad");
-        tabla.addColumn("Tienda");
+        tabla.addColumn("IDTienda");
+        tabla.addColumn("NombreTienda");
         tblista.setModel(tabla);
     }
 
@@ -61,13 +62,13 @@ public class ListarEmp extends javax.swing.JFrame {
 
         tblista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Precio", "Cantidad", "Tienda"
+                "ID", "Nombre", "Precio", "Cantidad", "IDTienda", "NombreTienda"
             }
         ));
         jScrollPane1.setViewportView(tblista);
@@ -137,8 +138,8 @@ public class ListarEmp extends javax.swing.JFrame {
                                 .addComponent(cbxcat, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel1)
+                                    .addGap(16, 16, 16)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -188,7 +189,7 @@ private void listar(List<ProductoDTO> lista) {
     tabla.getDataVector().removeAllElements();
     for (ProductoDTO producto : lista) {
         Object[] data = {producto.getId(), producto.getNombre(), producto.getPrecio(), 
-                         producto.getCantidad(), producto.getIdtienda()};
+                         producto.getCantidad(), producto.getIdtienda(), producto.getNomtienda()};
         tabla.addRow(data);
     }
 }

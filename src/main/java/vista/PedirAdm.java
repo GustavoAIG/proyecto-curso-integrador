@@ -24,6 +24,7 @@ public class PedirAdm extends javax.swing.JFrame {
         tabla.addColumn("Estado");
         tabla.addColumn("Proveedor");
         tabla.addColumn("Tienda");
+        tabla.addColumn("IDProducto");
         tblpedidos.setModel(tabla);
         llenarcbx();
     }
@@ -103,6 +104,8 @@ public class PedirAdm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        txtnomprove = new javax.swing.JTextField();
+        txtnomtienda = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -131,23 +134,33 @@ public class PedirAdm extends javax.swing.JFrame {
 
         tblpedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Cantidad", "Fecha", "Proveedor", "Tienda"
+                "ID", "Cantidad", "Fecha", "Proveedor", "Tienda", "IDProducto"
             }
         ));
         jScrollPane1.setViewportView(tblpedidos);
 
         cbxidtienda.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        cbxidtienda.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxidtiendaItemStateChanged(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel9.setText("Seleccione ID de la tienda");
 
         cbxidproveedor.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        cbxidproveedor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxidproveedorItemStateChanged(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel8.setText("Seleccione ID del proveedor");
@@ -213,6 +226,12 @@ public class PedirAdm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txtnomprove.setEditable(false);
+        txtnomprove.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+
+        txtnomtienda.setEditable(false);
+        txtnomtienda.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -228,8 +247,8 @@ public class PedirAdm extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,15 +256,17 @@ public class PedirAdm extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
                         .addGap(90, 90, 90)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcant, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxid, 0, 125, Short.MAX_VALUE)
+                            .addComponent(txtcant, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(cbxidproveedor, 0, 125, Short.MAX_VALUE)
+                            .addComponent(txtnomprove))
                         .addGap(117, 117, 117)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(cbxidtienda, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtnompro)))
+                            .addComponent(txtnompro)
+                            .addComponent(txtnomtienda, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 734, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 81, Short.MAX_VALUE))
         );
@@ -257,40 +278,47 @@ public class PedirAdm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel7))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtnompro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9))))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cbxidtienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel8)))
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 97, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnpedir)
-                            .addComponent(btnactuestado))
-                        .addGap(24, 24, 24))))
+                            .addComponent(cbxid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtnompro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxidtienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel8)))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtnomprove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 95, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnpedir)
+                                    .addComponent(btnactuestado))
+                                .addGap(24, 24, 24))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtnomtienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -364,11 +392,54 @@ public class PedirAdm extends javax.swing.JFrame {
         }
     }
     }//GEN-LAST:event_cbxidItemStateChanged
-private void listar(List<PedidoDTO> lista) {
+
+    private void cbxidproveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxidproveedorItemStateChanged
+       if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+        if (cbxidproveedor.getSelectedIndex() > 0) {
+            int id = Integer.parseInt(cbxidproveedor.getSelectedItem().toString());
+            cargarprove(id);
+        }
+    }
+    }//GEN-LAST:event_cbxidproveedorItemStateChanged
+
+    private void cbxidtiendaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxidtiendaItemStateChanged
+          if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+        if (cbxidtienda.getSelectedIndex() > 0) {
+            int id = Integer.parseInt(cbxidtienda.getSelectedItem().toString());
+            cargartienda(id);
+        }
+    }
+    }//GEN-LAST:event_cbxidtiendaItemStateChanged
+public void cargarprove(int id) {
+    List<ProveedorDTO> lista = provedao.listarTodoProvee();
+    for (ProveedorDTO emp : lista) {
+        if (emp.getId() == id) { // Supongo que tienes un método getId() en ProveedorDTO
+            txtnomprove.setText(emp.getNombre());
+            return; // Termina el método una vez encontrado
+        }
+    }
+    // Si no se encuentra el ID
+    txtnomprove.setText("No encontrado");
+}
+
+public void cargartienda(int id) {
+    List<TiendaDTO> lista = tiendao.listarTodoTie();
+    for (TiendaDTO emp : lista) {
+        if (emp.getId() == id) { 
+            txtnomtienda.setText(emp.getNombre());
+            return; // Termina el método una vez encontrado
+        }
+    }
+    // Si no se encuentra el ID
+    txtnomtienda.setText("No encontrado");
+}
+
+    
+    private void listar(List<PedidoDTO> lista) {
     tabla.getDataVector().removeAllElements();
     for (PedidoDTO pedido : lista) {
         Object[] data = {pedido.getId(), pedido.getCantidad(), pedido.getFecha(), pedido.getEstado(),
-                         pedido.getIdprove(), pedido.getIdtienda()};
+                         pedido.getIdprove(), pedido.getIdtienda(), pedido.getIdpro()};
         tabla.addRow(data);
     }
     tabla.fireTableDataChanged();
@@ -378,6 +449,7 @@ public void listarini(){
     List<PedidoDTO> lista = empdao.listarTodoPed();
         listar(lista);
 }
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -431,5 +503,7 @@ public void listarini(){
     private javax.swing.JTable tblpedidos;
     private javax.swing.JTextField txtcant;
     private javax.swing.JTextField txtnompro;
+    private javax.swing.JTextField txtnomprove;
+    private javax.swing.JTextField txtnomtienda;
     // End of variables declaration//GEN-END:variables
 }

@@ -200,7 +200,8 @@ public class EmpleadoDAO {
 }
 
 public List<ProductoDTO> listarProSinStock() {
-    String sql = "SELECT * FROM productos WHERE est_pro = 'sin stock';";
+    String sql = "SELECT p.*, t.nom_tien FROM productos p LEFT JOIN tiendas t ON p.id_tien = t.id_tien WHERE p.est_pro = 'sin stock';";
+    
     List<ProductoDTO> lista = new ArrayList<>();
     try {
         con = conexion.ConectarBaseDatos();
@@ -208,13 +209,14 @@ public List<ProductoDTO> listarProSinStock() {
         rs = ps.executeQuery();
         while (rs.next()) {
             ProductoDTO producto = new ProductoDTO();
-            producto.setId(rs.getInt(1));
-            producto.setNombre(rs.getString(2));
-            producto.setCategoria(rs.getString(3));
-            producto.setPrecio(rs.getDouble(4));
-            producto.setCantidad(rs.getInt(5));
-            producto.setEstado(rs.getString(6));
-            producto.setIdtienda(rs.getInt(7));
+            producto.setId(rs.getInt("id_pro"));
+            producto.setNombre(rs.getString("nom_pro"));
+            producto.setCategoria(rs.getString("cat_pro"));
+            producto.setPrecio(rs.getDouble("pre_pro"));
+            producto.setCantidad(rs.getInt("cant_pro"));
+            producto.setEstado(rs.getString("est_pro"));
+            producto.setIdtienda(rs.getInt("id_tien"));
+            producto.setNomtienda(rs.getString("nom_tien")); 
             lista.add(producto);
         }
     } catch (Exception e) {

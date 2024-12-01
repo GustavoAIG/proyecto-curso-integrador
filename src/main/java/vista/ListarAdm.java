@@ -19,10 +19,10 @@ public void mostrarCabecera(String tipo) {
 
         switch (tipo) {
             case "Productos":
-                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
+                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "IDTienda", "NombreTienda"});
                 break;
             case "Productos sin Stock":
-                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
+                tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad",  "IDTienda", "NombreTienda"});
                 break;
             case "Productos Eliminados":
                 tabla.setColumnIdentifiers(new String[]{"ID", "Nombre", "Precio", "Cantidad", "Tienda"});
@@ -49,11 +49,11 @@ public void mostrarCabecera(String tipo) {
             switch (tipo) {
                 case "Productos":
                     ProductoDTO prod = (ProductoDTO) obj;
-                    tabla.addRow(new Object[]{prod.getId(), prod.getNombre(), prod.getPrecio(), prod.getCantidad(), prod.getIdtienda()});
+                    tabla.addRow(new Object[]{prod.getId(), prod.getNombre(), prod.getPrecio(), prod.getCantidad(), prod.getIdtienda(), prod.getNomtienda()});
                     break;
                 case "Productos sin Stock":
                     ProductoDTO produ = (ProductoDTO) obj;
-                    tabla.addRow(new Object[]{produ.getId(), produ.getNombre(), produ.getPrecio(), produ.getCantidad(), produ.getIdtienda()});
+                    tabla.addRow(new Object[]{produ.getId(), produ.getNombre(), produ.getPrecio(), produ.getCantidad(), produ.getIdtienda(), produ.getNomtienda()});
                     break;
                 case "Productos Eliminados":
                     ProductoDTO produu = (ProductoDTO) obj;
@@ -184,8 +184,8 @@ public void mostrarCabecera(String tipo) {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel1)
+                                    .addGap(4, 4, 4)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, Short.MAX_VALUE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
