@@ -26,6 +26,7 @@ public class InicioAdm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnreportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -138,6 +139,16 @@ public class InicioAdm extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Bienvenido Administrador");
 
+        btnreportes.setBackground(new java.awt.Color(255, 51, 51));
+        btnreportes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnreportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnreportes.setText("Reportes");
+        btnreportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnreportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -165,6 +176,8 @@ public class InicioAdm extends javax.swing.JFrame {
                 .addGap(597, 597, 597))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnreportes, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(259, 259, 259)
                 .addComponent(btncerrarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -184,8 +197,13 @@ public class InicioAdm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnlistar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnpedir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79)
-                .addComponent(btncerrarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btncerrarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(btnreportes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(54, 54, 54))
         );
 
@@ -233,6 +251,13 @@ public class InicioAdm extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnpedirActionPerformed
 
+    private void btnreportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreportesActionPerformed
+      //cambiesito
+        PedirAdm ini = new PedirAdm();
+        ini.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnreportesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -275,6 +300,7 @@ public class InicioAdm extends javax.swing.JFrame {
     private javax.swing.JButton btnlistar;
     private javax.swing.JButton btnpedir;
     private javax.swing.JButton btnregis;
+    private javax.swing.JButton btnreportes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
